@@ -1,0 +1,28 @@
+\begin{abstract}
+% Teil #1 – Worum geht es?                       = Fragestellung 
+%                                                = 1. Die Erklärung der Problemstellung 
+%                                                = die Fragestellung und generelle Zielsetzung deiner Abschlussarbeit
+Neural Cellular Automatas (NCAs) are a promising deep-learning approach for medical image segmentation because they are lightweight while producing high-quality segmentations. They can be used in many environments where the prevailing large-scale segmentation models, primarily based on U-Nets, are too large because the resources are unavailable, as with many primary care facilities, due to economic or general local developments or crises. Like other machine learning models, NCAs, too, can suffer from performance degradation when confronted with perturbations in the data or domain shifts (out of distribution data). However, in critical scenarios, like medical imaging, where people's health is at stake, robustness against such disruptions is of crucial importance. This thesis presents an approach to improve the robustness of NCAs for medical image segmentation against such perturbations based on the NCA Quality Score (NQM), a variance-based quality metric.
+
+
+% Teil #2 – Wie hast du das Thema bearbeitet?    = Methoden      
+%                                                = 2. Inwiefern der Ansatz anders ist zu bestehenden und was die Intuition ist 
+%                                                = Welche Methodik wurde wie angewendet? 
+%                                                = Hypothesen und verwendete Methoden
+Unlike most neural networks, the output of NCAs is not deterministic but stochastic. Therefore, different outputs are generated for the same input each time. The NQM is a scalar metric based on the variance of these outputs and has been used to indicate the stability of the model and detect failure cases. We propose to utilize the variance captured in the NQM metric for training by including it in the loss function. Our experiments take a broad exploratory approach. We developed several loss functions in which we adapted the NQM. First of all, one, where it is weighted linearly. We simulated various disturbances in datasets to test these losses for robustness. On the one hand, we used different augmentations to simulate radiological noise, and on the other hand, mixing datasets from different sources but from the same organ to simulate domain shifts.
+To speed up training, further increase robustness, and improve stability, we also performed tests on pre-trained models, investigated two hyperparameters, developed three non-linear losses, and compared them with the linear variant in different sub-variants.
+
+
+% Teil #3 – Was sind die wichtigsten Ergebnisse? = Ergebnisse    
+%                                                = 3. Was genau damit erreicht wurde, insgesamt, mit Präsentation der Ergebnisse 
+%                                                = Was sind die wichtigsten Ergebnisse?
+Our approach improves the robustness of NCAs against radiological perturbations by up to 15 points on the Dice. Especially with pretrained models and adjustments to the hyperparameters, we were able to develop a fast and stable method. Some non-linear variants show equally stable behavior, while others perform relatively poorly. We assume that the stable ones can further improve our method. For domain shifts with single or few out-of-domain samples, there are shifts in performance. Some models perform better, others worse. We assume the challenging dataset is a significant factor.
+
+
+Overall, our results clearly show that integrating the NQM into the loss is a powerful tool to improve the robustness of NCAs for medical image segmentation.
+
+
+%%% Keywords %%%
+\vspace{1,2cm}
+\textbf{Keywords:} Neural Cellular Automata, Medical Image Segmentation, Robustness, NCA Quality Score (NQM)
+\end{abstract}
