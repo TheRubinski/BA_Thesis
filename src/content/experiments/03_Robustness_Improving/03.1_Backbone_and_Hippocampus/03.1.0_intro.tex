@@ -1,0 +1,18 @@
+\subsection{Backbone-NCA on Hippocampus}
+\label{experiments:03.1.0:backbone_hippo:intro}
+In this section, we come to our most commonly used setup and the most comprehensive results. 
+As first setup for the robustness test, we choose the BackboneNCA (\autoref{methods:NCA:Models}) and the hippocampus dataset with spike and random noise augmentations as they have just been presented.
+
+First, we will see in \autoref{experiments:03.1.1:backbone_hippo:spike_noise} that the DiceBceNQM improves the robustness to radiological noise compared to the DiceBCE 
+by up to 7 points on the Dice when artifacts were sparse (''0.01'') in the dataset, and by up to 15 points on the Dice when no artifacts were present in the training dataset, and also leads to no degradation in all other tests in this setup.
+
+In the subsequent parts, we present several approaches to improve this setup further. Of particular note are the speedup achieved by using pretrained models (\autoref{experiments:03.1.2:backbone_hippo:pretrained}) and a minimum stacksize of 2 (\autoref{experiments:03.1.3:backbone_hippo:stackSize}). With both approaches, we did not notice any loss of robustness gain due to the DiceBceNQM.
+
+Then we introduce the hyperparameter alpha ($\alpha$) in \autoref{experiments:03.1.4:backbone_hippo:alpha}, which at a value of 2.0 increases robustness furthermore compared to DiceBceNQM without alpha by up to 4 points on the Dice.
+Finally, in \autoref{experiments:03.1.x:FurtherNQMLosses} we come to the testing of alternative nonlinear loss functions with NQM, where especially the sqrtNQM (\autoref{experiments:03.1.7:backbone_hippo:sqrtNQM}) is a promising candidate, mainly because this loss shows equivalent robustness improvements, but should converge faster. However, speed tests in this regard were not part of this work.
+
+%%% --- inputs ---
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/03.1.1_Augmented_spikesAndNoise}
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/03.1.2_pretrained}
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/03.1.w_Hyperparameters}
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/03.1.x_FurtherNQMLosses}

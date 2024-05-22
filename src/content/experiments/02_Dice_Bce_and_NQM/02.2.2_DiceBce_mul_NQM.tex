@@ -1,0 +1,9 @@
+\paragraph{Multiplicative Dice-Bce-NQM Losses}
+\label{experiments:02.2.2:dice+NQM}
+To give the NQM more weight in the loss, we also used the NQM as a factor before the DiceBCE. Therefore, we tested the following three implementations of a multiplicative DiceBceNQM loss. However, they all suffered from the same problem as the NQM alone (\autoref{experiments:01.1:Only_NQM}) and the pretrained versions (\autoref{experiments:02.2.1:Only_NQM_Pretrained}). DiceBce*NQM-2 and 3 canceled only the part that has been multiplied with the NQM. Therefore, we tested, with the NQM as defined in \autoref{eq:02.1:Only_NQM}:
+
+\begin{align}
+    \text{DiceBce*NQM-1}\ &:=\ {\color{red}\mathrm{NQM}\ \cdot\ }(1 - \mathrm{Dice} + \mathrm{Bce})\\
+    \text{DiceBce*NQM-2}\ &:=\ {\color{red}\mathrm{NQM}\ \cdot\ }(1 - \mathrm{Dice}) + \mathrm{Bce}\\
+    \text{DiceBce*NQM-3}\ &:=\ 1 - \mathrm{Dice} + {\color{red}\mathrm{NQM}\ \cdot\ }\mathrm{Bce}\\ 
+\end{align}

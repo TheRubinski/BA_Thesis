@@ -1,0 +1,21 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}llll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{4}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train dataset} & decath & decath shift 12 isbi  & decath shift 8 i2cvb & decath shift 4 ulc\\\midrule[1.3pt]
+        % --
+        diceBce     & decath            & 0.784 & 0.631 & 0.598 & 0.812\\
+        diceBceNQM  & decath            & 0.796 +.01 & 0.655 +.02 & 0.602 & 0.825 +.01\\\bottomrule %\rowcolor{BG}
+        % diceBce     & shift 12 isbi     & 0.863 & 0.786 & 0.601 & 0.879\\\rowcolor{BG}
+        % diceBceNQM  & shift 12 isbi     & 0.881 +.02 & 0.759 -.03 & 0.622 +.02 & 0.885 +.01\\
+        % diceBce     & shift 8 i2cvb     & 0.866 & 0.666 & 0.737 & 0.882\\
+        % diceBceNQM  & shift 8 i2cvb     & 0.869 & 0.649 -.02 & 0.712 -.03 & 0.887 +.01\\\rowcolor{BG}
+        % diceBce     & shift 4 ucl       & 0.738 & 0.708 & 0.578 & 0.748\\\rowcolor{BG}
+        % diceBceNQM  & shift 4 ucl       & 0.804 +.07 & 0.688 -.02 & 0.594 +.02 & 0.779 +.03\\\hline
+        % XXX Nur die Ersten Beiden Zeilen macht Sinn. Die anderen bietet keinen informationstechnischen Mehrwert, weil einfach andere nicht Domainfremde samples in test-set geschoben wurden
+    \end{tabular}
+    \caption{\textbf{Multiple Domainshifts} Test on Trainsets (\autoref{experiments:03.4.2:Backbone_prost:DomainShifts}): \todo{caption}}
+    \label{tab:03.4.2:backbone_Prost:domainShifts:multiOnMulti}
+\end{table}

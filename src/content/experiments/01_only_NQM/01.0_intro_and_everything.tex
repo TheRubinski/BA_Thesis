@@ -1,0 +1,9 @@
+\section{NQM as Lossfunction}
+\label{experiments:01.0:Into}
+
+We decided to investigate whether it is possible to include the NQM in the training loop to improve the robustness of the model by implementing the NQM directly as a loss function  or using it inside of it. To make sure that this is even possible, but also as a sensible first step in this direction, we decided to implement the NQM directly as a loss function.
+
+In this section, we will see our first attempts to do so as a proof of concept but also to illustrate the problems that arise when using only the NQM as a loss. First, we will see in \autoref{experiments:01.1:Only_NQM} that it is technically possible to use the NQM directly as a loss function but that it has no use for training. This is because the NQM itself does not consider the label; therefore, the model will always take the opportunity to minimize the NQM as a loss by fitting into an all-one label.
+
+%%% input %%%
+\input{content/experiments/01_only_NQM/01.1_onlyNQMAsLoss}

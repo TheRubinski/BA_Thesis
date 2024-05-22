@@ -1,0 +1,27 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}llllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train set}& original & Spike 1.0 & Spike 0.3 & Spike 0.2 & Spike 0.1 & Spike 0.01\\\midrule[1.3pt]
+        % ---
+        DiceBCE        & original    & 0.787 & 0.321 & 0.684 & 0.717 & 0.790 & 0.793\\
+        DiceBceNQM     & original    & 0.772 -.02 & 0.384 \textbf{+.06} & 0.665 -.02 & 0.712 -.01 & 0.776 -.01 & 0.774 -.02\\\rowcolor{BG}
+        DiceBCE        & Spike 1.0   & 0.776 & 0.593 & 0.722 & 0.678 & 0.767 & 0.780\\\rowcolor{BG}
+        DiceBceNQM     & Spike 1.0   & 0.740 -.04 & 0.632 +.04 & 0.653 \textbf{-.07} & 0.666 -.01 & 0.740 -.03 & 0.740 -.04\\
+        DiceBCE        & Spike 0.3   & 0.791 & 0.607 & 0.683 & 0.726 & 0.798 & 0.793\\
+        DiceBceNQM     & Spike 0.3   & 0.780 -.01 & 0.658 \textbf{+.05} & 0.667 -.02 & 0.737 +.01 & 0.780 -.02 & 0.781 -.01\\\rowcolor{BG}
+        DiceBCE        & Spike 0.2   & 0.774 & 0.377 & 0.656 & 0.701 & 0.776 & 0.771\\\rowcolor{BG}
+        DiceBceNQM     & Spike 0.2   & 0.808 +.03 & 0.503 \textbf{+.13} & 0.693 +.04 & 0.709 +.01 & 0.810 +.03 & 0.809 +.04\\
+        DiceBCE        & Spike 0.1   & 0.788 & 0.392 & 0.671 & 0.712 & 0.789 & 0.794\\
+        DiceBceNQM     & Spike 0.1   & 0.802 +.01 & 0.528 \textbf{+.14} & 0.684 +.01 & 0.759 +.05 & 0.800 +.01 & 0.798\\\rowcolor{BG}
+        DiceBCE        & Spike 0.01  & 0.807 & 0.353 & 0.686 & 0.721 & 0.802 & 0.807\\\rowcolor{BG}
+        DiceBceNQM     & Spike 0.01  & 0.790 -.02 & 0.354 & 0.674 -.01 & 0.700 -.02 & 0.789 -.01 & 0.788 -.02\\\hline
+        % --- 2k ---
+        2k DiceBCE    & spike 0.01  & 0.793 & 0.345 & 0.684 & 0.711 & 0.797 & 0.790\\
+        2k DiceBceNQM & spike 0.01  & 0.791 & 0.347 & 0.674 -.01 & 0.700 -.01 & 0.789 -.01 & 0.791\\\bottomrule
+    \end{tabular}
+    \caption{Med-NCA, prostate dataset \textbf{Augmented with Spikes} 1000 epochs (\autoref{experiments:03.2.1:med_prost:augmented}): Mixed and divergent result. With this setting the approach becomes unstabel. However, this could be changed with a pretrained model (\autoref{tab:03.2.1:medNCA_Prost:on_Spike:3kepochs}).}
+    \label{tab:03.2.1:medNCA_Prost:on_Spike}
+\end{table}

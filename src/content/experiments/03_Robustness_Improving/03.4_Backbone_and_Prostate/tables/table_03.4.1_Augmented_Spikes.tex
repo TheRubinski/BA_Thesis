@@ -1,0 +1,24 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}llllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train set} & original & Spike 1.0 & Spike 0.3 & Spike 0.2 & Spike 0.1 & Spike 0.01\\\midrule[1.3pt]
+        % ---
+        DiceBCE        & original    & 0.788 & 0.277 & 0.661 & 0.717 & 0.788 & 0.787\\
+        DiceBCENQM     & original    & 0.798 +.01 & 0.297 +.02 & 0.663 & 0.719 & 0.804 +.02 & 0.795 +.01\\\rowcolor{BG}
+        DiceBCE        & Spike 1.0   & 0.781 & 0.656 & 0.678 & 0.788 & 0.780 & 0.777\\\rowcolor{BG}
+        DiceBceNQM     & Spike 1.0   & 0.783 & 0.601 \textbf{-.06} & 0.699 +.02 & 0.757 \textbf{-.03} & 0.769 -.01 & 0.774\\
+        DiceBCE        & Spike 0.3   & 0.746 & 0.295 & 0.638 & 0.706 & 0.774 & 0.768\\
+        DiceBceNQM     & Spike 0.3   & 0.776 \textbf{+.03} & 0.301 +.01 & 0.654 +.02 & 0.709 & 0.771 & 0.768\\\rowcolor{BG}
+        DiceBCE        & Spike 0.2   & 0.798 & 0.301 & 0.677 & 0.725 & 0.804 & 0.798\\\rowcolor{BG}
+        DiceBceNQM     & Spike 0.2   & 0.785 -.01 & 0.289 -.01 & 0.672 -.01 & 0.720 -.01 & 0.785 -.02 & 0.785 -.01\\
+        DiceBCE        & Spike 0.1   & 0.795 & 0.354 & 0.686 & 0.751 & 0.797 & 0.801\\
+        DiceBceNQM     & Spike 0.1   & 0.815 +.02 & 0.363 +.01 & 0.697 +.01 & 0.791 \textbf{+.04} & 0.819 +.02 & 0.822 +.02\\\rowcolor{BG}
+        DiceBCE        & Spike 0.01  & 0.809 & 0.326 & 0.682 & 0.731 & 0.806 & 0.811\\\rowcolor{BG}
+        DiceBceNQM     & Spike 0.01  & 0.796 -.01 & 0.321 -.01 & 0.669 -.01 & 0.724 -.01 & 0.798 -.01 & 0.796 -.02\\\bottomrule
+    \end{tabular}
+    \caption{Backbone-NCA, prostate dataset \textbf{Augmented with Spikes} (\autoref{experiments:03.4.1:backbone_prost:Augmented}): On Pretrained Model. Mixed results, as with the Med-NCA. Even more divergent, but overall not worse.}
+    \label{tab:03.4.1:Backbone_Prost:on_Spike}
+\end{table}

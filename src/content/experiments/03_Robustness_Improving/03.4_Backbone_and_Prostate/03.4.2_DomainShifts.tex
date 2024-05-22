@@ -1,0 +1,52 @@
+\subsubsection{Domain Shifts}
+\label{experiments:03.4.2:Backbone_prost:DomainShifts}
+For the domain shifts, as in \autoref{experiments:03.2.2:med_prost:onDomainShifts}, we have one cohort each on the shift 1 datasets, as well as on the datasets where several additional samples were added, and on the all joined dataset (\autoref{experiments:03.0:Intro}). 
+For the shift 1 datasets (\autoref{tab:03.4.2:Backbone_Prost:domainShifts:OneOnOriginals}), the results on the Backbon-NCA diverge much less than on the Med-NCA. The model trained on the original dataset tends towards more robustness on all datasets or at least no deterioration with DiceBceNQM. For the other models, it makes no difference whether DiceBCE or DiceBceNQM was used for training (max $\pm$ 3). 
+
+Only the model trained on the all joined dataset shows an evident deterioration on one dataset (i2cvb) with -6 points, while the others are almost constant (max $\pm$ 2).
+
+The results for the multiple domain shifts are also significantly less divergent ("only" $\pm$ 9, instead of $\pm$ 16) than for the Med-NCA but still similarly mixed, which again suggests that the prostate dataset is overall heavier than the hippocampus dataset, and clearly shows that the DiceBceNQM loss \textit{can} lead to a more robust model but also to a less robust model overall. And, that this seems to depend on the dataset, which is contrary to the idea of overall robustness.
+\iffalse
+%%% Singles %%%
+XXX Singles ??? XXX 
+-------------------
+XXXX
+--- Singels on Originals
+mean: -0.0008
+mean on absoulte values: 0.0164
+sum: -0.019
+sum on absoulte values: 0.411
+range: (0.062, 0.059)
+
+
+--- Singels on Singels
+mean: -0.0027
+mean on absoulte values: 0.0108
+sum: -0.054
+sum on absoulte values: 0.216
+range: (-0.017, 0.024)
+
+%%% Multis %%%
+-------------------
+XXXX
+--- Multi on Originals
+mean: 0.0038
+mean on absoulte values: 0.0281
+sum: 0.076
+sum on absoulte values: 0.562
+range: (-0.07, 0.087)
+
+--- Multi on Multi
+mean: 0.0081
+mean on absoulte values: 0.0193
+sum: 0.13
+sum on absoulte values: 0.308
+range: (-0.027, 0.066)
+\fi
+\iftable
+%%%% tables %%%%
+\input{content/experiments/03_Robustness_Improving/03.4_Backbone_and_Prostate/tables/table_03.4.2_Shift_One_on_One}
+\input{content/experiments/03_Robustness_Improving/03.4_Backbone_and_Prostate/tables/table_03.4.2_Shift_One_on_Originals}
+\input{content/experiments/03_Robustness_Improving/03.4_Backbone_and_Prostate/tables/table_03.4.2_Shift_Multi_On_Originals}
+\input{content/experiments/03_Robustness_Improving/03.4_Backbone_and_Prostate/tables/table_03.4.2_Shift_Multi_On_Multi}
+\fi

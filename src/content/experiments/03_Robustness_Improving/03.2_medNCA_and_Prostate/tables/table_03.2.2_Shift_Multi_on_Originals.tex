@@ -1,0 +1,20 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}lllllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train dataset} & decath & isbi & i2cvb & ucl & all joined\\\midrule[1.3pt]
+        % ---
+        diceBce     & decath         & 0.789 & 0.306 & 0.246 & 0.323 & 0.308\\
+        diceBceNQM  & decath         & 0.788 & 0.333 +.03 & 0.253 +.01 & 0.325 & 0.290 -.02\\\rowcolor{BG}
+        diceBce     & shift 12 isbi  & 0.838 & 0.645 & 0.331 & 0.318 & 0.516\\\rowcolor{BG}
+        diceBceNQM  & shift 12 isbi  & 0.849 +.01 & 0.643 & 0.388 \textbf{+.06} & 0.319 & 0.514\\
+        diceBce     & shift 8 i2cvb  & 0.852 & 0.438 & 0.578 & 0.328 & 0.459\\
+        diceBceNQM  & shift 8 i2cvb  & 0.859 +.01 & 0.304 \textbf{-.13} & 0.536 -.04 & 0.323 -.01 & 0.411 -.05\\\rowcolor{BG}
+        diceBce     & shift 4 ucl    & 0.781 & 0.561 & 0.280 & 0.519 & 0.505\\\rowcolor{BG}
+        diceBceNQM  & shift 4 ucl    & 0.812 +.03 & 0.397 \textbf{-.16} & 0.263 -.02 & 0.557 +.04 & 0.449 \textbf{-.06}\\\bottomrule
+    \end{tabular}
+    \caption{Med-NCA, \textbf{Multiple Domainshifts} (\autoref{experiments:03.2.2:med_prost:onDomainShifts}): Test on Original Datasets. Even more mixed and divergent as Single Domainshifts.}
+    \label{tab:03.2.2:medNCA_Prost:domainShifts:multiOnOriginals}
+\end{table}

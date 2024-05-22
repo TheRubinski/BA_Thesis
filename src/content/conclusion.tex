@@ -1,0 +1,45 @@
+\chapter{Conclusion}
+\label{conclusions}
+% Teil #1 – Worum geht es?                       = Fragestellung 
+%                                                = 1. Die Erklärung der Problemstellung 
+%                                                = die Fragestellung und generelle Zielsetzung deiner Abschlussarbeit
+%                                                = Problemstatement
+%% Einstieg + Zusammenfassung
+%
+% Einstieg %
+In this thesis, we explored whether the NQM can be used inside the training circle to improve the robustness of an NCA; we developed a working approach, improved it, and opened ways to even further improvements.
+NCAs are lightweight neural models that are promising for providing access to state-of-the-art machine leaning medical imaging in low-resource environments. Prevailing large-scale segmentation models, primarily based on U-Nets, often cannot be used there, as they require a much more expensive infrastructure \cite{kalkhof:2023:M3D-NCA}. 
+Improving robustness is one of the main challenges machine learning is facing nowadays \cite{Yan:2019:DomainShiftsInMedSeg, Zhou:2023:DomainGeneralization_alsoAugmentation}, and is crucial for the medical sector since people's health is at stake. 
+The NQM, a variance-based quality metric, has been developed by \cite{kalkhof:2023:M3D-NCA} to indicate an NCA's stability and detect failure cases. Therefore, the question arouse, if the NQM can also be used to improve the robustness of an NCA, which this thesis has investigated.
+
+
+% Teil #2 – Wie hast du das Thema bearbeitet?    = Methoden      
+%                                                = 2. Inwiefern der Ansatz anders ist zu bestehenden und was die Intuition ist 
+%                                                = Welche Methodik wurde wie angewendet? 
+%                                                = Hypothesen und verwendete Methoden
+%%%% Zusammenfassung/ Übersicht der Arbeit %%%%%
+% Grundlagen, Datensatzgenerirungen, 
+The NQM uses the stochastic properties of NCAs. It measures the normalized variance over different outputs generated on the same input and thus provides a measure of the quality of an NCA. The NQM, therefore, has no application for most other machine learning approaches, as these are mostly deterministic.
+As core approach, we chose to implement the NQM as an extension of an existing loss function since the NQM is constructed as a metric that is optimal when it is minimal (\autoref{experiments:01.0:Into}). Thus, we consider this approach as native to the machine learning cycle in the sense that the loss is minimized natively in the machine learning cycle. 
+We have chosen to extend an existing loss because the NQM alone is not suitable for minimization due to the lack of relativization to the label, i.e., the NQM is minimal if the label is maximal, which contradicts the primary requirements of segmentation, namely to predict a label, as correctly as possible, that is, in general, a subset of the input.
+That way, we developed an additive and linear weighted NQM loss, the DiceBceNQM, and a group of non-linear ones and compared the performance to the standard loss of the models we used, the DiceBCE. We examined two hyperparameters, stacksize and alpha, and tested our approach on pretrained models as well to speed it up since the NQM needs multiple outputs, and this slows down training.
+Concerning robustness, we investigated our approach on two segmentation NCAs, the Backbone-NCA and the Med-NCA. For both, we tested for domain shifts as well as for radiological noise. To do so, we augmented two medical datasets with spikes and random noise, the hippocampus dataset and the prostate dataset from the medical image segmentation decathlon \cite{Antonelli:2022:MedSegmentationDecatlon}. We also used this prostate dataset as a base to simulate domain shifts, together with four other prostate datasets. We generated seven series of datasets with 27 datasets together for our robustness tests.
+
+% Teil #3 – Was sind die wichtigsten Ergebnisse? = Ergebnisse    
+%                                                = 3. Was genau damit erreicht wurde, insgesamt, mit Präsentation der Ergebnisse 
+%                                                = Was sind die wichtigsten Ergebnisse?
+%%% Ergebnisse
+The robustness improvement results were clearly successful on the Backbone-NCA with augmentations on the hippocampus dataset \autoref{experiments:03.1.1:backbone_hippo:spike_noise}. There our additive and linear weighted variant of our NQM losses, the DiceBceNQM, improves the robustness against radiological perturbations by up to 15 points on Dice. With this model and dataset, we have also shown several possible and already working ways to improve the approach further. Since the output generation for the NQM is very resource-intensive, especially regarding VRAM usage and computation time. We showed, that doing a post-training with the DiceBceNQM on models pretrained on the DiceBCE, leads to equivalent effects, but speeds up training a lot (\autoref{experiments:03.1.2:backbone_hippo:pretrained}). As well as a minimum stacksize of two, that also reduces the extensive VRAM usage (\autoref{experiments:03.1.3:backbone_hippo:stackSize}). 
+Furthermore we could identify the sqrtNQM (\autoref{experiments:03.1.x:FurtherNQMLosses}) as a promising candidate for further improvement, as it performs equally to the DiceBceNQM, but could converge faster, as well as doubling the hyperparameter alpha showed further positive effects (\autoref{experiments:03.1.4:backbone_hippo:alpha}).
+
+On the other hand, we have seen that transferring this to another model and another dataset is not trivial and that these positive results do not necessarily occur in other constellations (\autoref{experiments:03.2.0:med_prost:intro}, \ref{experiments:03.3.0:med_hippo:intro_and_Augmented}, \ref{experiments:03.4.0:backbone_prost:intro}). This was least problematic in the case of the Med-NCA on the hippocampus dataset, where there were no changes at all. For the other ones on the other hand, we faced very widely scattered results in our test series. For the worst case, the Med-NCA on the prostate dataset, -7 to +14 on Dice for augmentations and -16 to +7 for domain shifts. However, in the end, we were able to stabilize the results for the Med-NCA and the prostate dataset for the augmentations by using pretraind models and extensively extending the training time. Due to the similar problems in the other settings, we assume it is also possible to stabilize our approach for these. However, for augmentations, the results on the Med-NCA on the prostate dataset did stabilize to -2 to +5. For the average of our test cases in this setting, using the DiceBceNQM does not bring any improvements but also no deteriorations. Therefore, our approach is at least stable there.
+With our test, the scattering in results was limited to the dataset, not the model. Therefore, we assume the dataset is more challenging, which is reasonable as it contains significantly fewer samples -- 394 3D volumes for the hippocampus and only 48 for the prostate.
+Furthermore, it should be emphasized that our approach on the merged dataset on the Med-NCA achieves a significant robustness increase of up to +7 on Dice for one source dataset without becoming negative on any other datasets (\autoref{experiments:03.2.2:med_prost:onDomainShifts}). This is a positive exception for this more powerful model and more challenging dataset and is definitely worth pursuing. 
+
+
+% Future Works %
+In \autoref{future_work}, we have discussed fundamental criticisms of our approach, pointed out alternatives, as well as open threads in our explorations and opportunities to further develop our approach.
+
+
+%%%%%%%%%%%%
+Overall, our results show that integrating the NQM into the loss is a powerful tool to improve the robustness of NCAs for medical image segmentation, especially regarding disturbed data and merged datasets from multiple domains. We developed a working approach, improved it, and opened ways for further improvements.

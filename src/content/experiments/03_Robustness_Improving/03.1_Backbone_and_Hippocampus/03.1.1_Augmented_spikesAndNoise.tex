@@ -1,0 +1,22 @@
+\subsubsection{Augmented Datasets}
+\label{experiments:03.1.1:backbone_hippo:spike_noise}
+To test how the DiceBceNQM (\autoref{experiments:02.1:diceBce+NQM}) performs on augmented data, we trained one model with the DiceBceNQM and one model with the DiceBCE for each spike and noise dataset, as well as the original dataset without augmentations. A total of 22 models. The results can be seen in \autoref{tab:03.1.1:DiceBCE+NQM_vs_DiceBCE_on_Noise} and \autoref{tab:03.1.1:DiceBCE+NQM_vs_DiceBCE_on_Spike}. We tested these models on all datasets of the series (i.e., all Spike or all Noise datasets as well as the original dataset). The models trained on the DiceBCE for each dataset serve as a baseline for the models trained on the DiceBceNQM. The test results of DiceBceNQM - Spike 1.0 are compared to the test results of DiceBCE - Spike 1.0, the test results of DiceBceNQM - Noise 1.0 are compared to the test results of DiceBCE - Noise 1.0, and so on. The models with DiceBceNQM perform significantly better than the models with DiceBCE alone. All models are better or no worse. The range goes from -1 to +15 on the Dice and is massively positive, and almost all values are positive. Also noteworthy are the vast improvements on the fully augmented data (Noise 1.0 and Spike 1.0) of the models trained on the original dataset, for Spike +9 points, for Noise +15, as well as the vast improvements for the Spike models trained on the sparsely augmented data (Spike 0.01) of +7 points on Spike. Noise has ''only'' +2 points here.
+
+Therefore, using the DiceBceNQM improves robustness in this setting without adverse effects. First and foremost, a model trained with DiceBceNQM on the original dataset becomes much more robust on both spiked and noisy datasets than if trained with DiceBCE alone. Furthermore, the models trained on sparse augmented datasets (Spike 0.01 and Noise 0.01), as well as all others, also benefit from the DiceBceNQM, or at least are not degraded by it.
+
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/tables/table_03.1.1_Aug_spike_noise}
+\iffalse
+\begin{table}%[h!]
+    \centering
+    \begin{tabular}{|c|l|l|l|l|l|}
+        \hline
+        \bfseries dataset serie & mean on signed & mean on absolute & sum & sum on absolute & range\\\hline
+        % ---
+        Spikes & 0.0092 & 0.0103 & 0.331 & 0.371 & (-0.009, +0.087) \\\hline
+        Noise  & 0.0092 & 0.0097 & 0.331 & 0.351 & (-0.003, +0.154)\\\hline
+        % ---
+    \end{tabular}
+    \caption{Aggregations over the improvements$(+)$ and deteriorations$(-)$, using the DiceBceNQM compared to the DiceBCE on Dice. All values of the experiments used for theses Aggregations: \autoref{tab:03.1.1:DiceBCE+NQM_vs_DiceBCE_on_Spike} and \autoref{tab:03.1.1:DiceBCE+NQM_vs_DiceBCE_on_Noise}}
+    \label{tab:03.1.1:Aug_Spike_Noise_Aggregated}
+\end{table}
+\fi

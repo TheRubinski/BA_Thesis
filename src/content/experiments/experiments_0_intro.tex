@@ -1,0 +1,105 @@
+\chapter{Experiments}
+\label{experiments:intro}
+
+%%%%% Overview %%%%%%
+In this chapter, we focus on the experiments we conducted to investigate whether and to what extent the NQM (\autoref{methods:NQM}) can be used to increase the robustness of NCAs. \autoref{Experiments:OverviewTree} gives a condensed overview for the experiments. The experiments can be divided into three blocks: First, the tests whether the NQM can be implied as a loss at all (\autoref{experiments:01.0:Into}), secondly, the construction of functioning losses (\autoref{experiments:02.0:intro}), and thirdly, the robustness tests and improvements (\autoref{experiments:03.0:Intro}). These three build on each other logically and were executed in this order. However, this is only partially the case within the sections. More often, several strands were explored simultaneously, and there are some cross-connections. These sections are organized thematically and do not build on each other chronologically or logically.\\
+In \autoref{experiments:01.0:Into}, we first investigated whether the NQM could be implemented directly as a loss. This was preceded by a detailed evaluation of the existing setup, which also considered other ways of making the NQM usable. For example, by duplicating the samples for which the NQM is particularly poor in an interim evaluation. This could be done once or several times in the training cycle after a fairly large number of epochs. See also Future Works (\autoref{future_work}). However, the implementation as a loss was initially seen as the most promising solution. In \autoref{experiments:01.0:Into} we will only consider that this is technically possible in principle.\\
+Subsequently, in \autoref{experiments:02.0:intro}, the goal was to develop a loss that is either better than the standard loss of the existing training setup or at least no worse. Ultimately, the latter was the case.
+Finally, in \autoref{experiments:03.0:Intro} we were able to apply this loss function developed in \autoref{experiments:02.0:intro} in a simple setup on different perturbed datasets to increase robustness (\autoref{experiments:03.1.1:backbone_hippo:spike_noise}).\\
+We then applied this to a more sophisticated model and dataset. However, there were fewer positive results here (\autoref{experiments:03.2.0:med_prost:intro}), so we decided to investigate the transferability further. For this purpose, we conducted experiments separately for model and dataset to narrow down the problem area (\autoref{experiments:03.3.0:med_hippo:intro_and_Augmented} and \autoref{experiments:03.4.0:backbone_prost:intro}). The results here indicate that with the approach chosen here, it is primarily the dataset that is challenging in terms of transferability and less so the model.
+Furthermore, we simultaneously conducted additional tests with the successful setup (\autoref{experiments:03.1.2:backbone_hippo:pretrained}) and investigated hyperparameters (\autoref{experiments:03.1.w:Hyperpatameters}) and further loose (\autoref{experiments:03.1.x:FurtherNQMLosses}).
+
+%%%%% Overview - Tree %%%%%%
+\begin{figure}[h!]
+    \centering
+    \tikzstyle{selected}=[draw=red,fill=red!30]
+    \tikzstyle{done}=[fill=green!45]
+    \tikzstyle{tables done}=[fill=yellow!45]
+    \tikzstyle{optional}=[dashed,fill=gray!50]
+    \begin{tikzpicture}[dirtree]
+    \node [selected] {\ref{experiments:01.0:Into} experiments}
+        child { node {\ref{experiments:01.1:Only_NQM} Only NQM}}	
+        child { node {\ref{experiments:02.0:intro} Dice, Bce and NQM}
+            child { node {\ref{experiments:02.1:diceBce+NQM} DiceBceNQM}}
+            child { node {\ref{experiments:02.2:FurtherDice-Bce-NQMLosses} Further Mixed Dice-Bce-NQM Losses}
+                % child { node {\ref{experiments:02.2.1:Only_NQM_Pretrained} On Pretrained Models}}
+                % child { node {\ref{experiments:02.2.2:dice+NQM} Multiplicative Dice-Bce-NQM Losses}}
+            }
+        }
+        child { node {\ref{experiments:03.0:Intro} Robustness Improving}
+            child { node {\ref{experiments:03.1.0:backbone_hippo:intro} Backbone-NCA on Hippocampus}
+                child { node {\ref{experiments:03.1.1:backbone_hippo:spike_noise} Augmented Datasets}}
+                child { node {\ref{experiments:03.1.2:backbone_hippo:pretrained} Pretrained Models}}
+                child { node {\ref{experiments:03.1.w:Hyperpatameters} Hyperparameters}
+                    child { node {\ref{experiments:03.1.3:backbone_hippo:stackSize} stacksize 2, 3, 6}}
+                    child { node {\ref{experiments:03.1.4:backbone_hippo:alpha} alpha 0.5 and 2.0}}
+                }
+                child { node {\ref{experiments:03.1.x:FurtherNQMLosses} Non-Linear NQM Losses}
+                    child { node {\ref{experiments:03.1.5:backbone_hippo:logNQM} logNQM bases 2, e, 3, 10}}
+                    child { node {\ref{experiments:03.1.6:backbone_hippo:powNQM} powNQM base 3}}
+                    child { node {\ref{experiments:03.1.7:backbone_hippo:sqrtNQM} sqrtNQM}}
+                }
+            }
+            child { node {\ref{experiments:03.2.0:med_prost:intro} Med-NCA on Prostate}
+                child { node {\ref{experiments:03.2.1:med_prost:augmented} Augmented Datasets}}
+                child { node {\ref{experiments:03.2.2:med_prost:onDomainShifts} Domain Shifts}}
+            }
+            child { node {\ref{experiments:03.3.0:med_hippo:intro_and_Augmented} Med-NCA on Hippocampus}}
+            child { node {\ref{experiments:03.4.0:backbone_prost:intro} Backbone-NCA on Prostate}
+                child { node {\ref{experiments:03.4.1:backbone_prost:Augmented} Augmented Datasets}}
+                child { node {\ref{experiments:03.4.2:Backbone_prost:DomainShifts} Domain Shifts}}
+            }
+        };
+    \end{tikzpicture}
+    \caption{Condensed overview of our experiments}
+    \label{Experiments:OverviewTree}
+\end{figure}
+
+%%%%% Datasets %%%%%
+\subsection*{Datasets}
+\begin{figure}[h]
+    \centering
+        \begin{minipage}{0.49\textwidth}
+        \centering
+        %\includegraphics[width=0.9\textwidth]{example-image-a} % first figure itself
+        \includegraphics[width=\linewidth]{Graphics/datasets/dataset_hippo_examples_small.png}
+    \end{minipage} \hfill
+    \begin{minipage}{0.49\textwidth}
+        \centering
+        %\includegraphics[width=0.9\textwidth]{example-image-b} % second figure itself
+        \includegraphics[width=\linewidth]{Graphics/datasets/dataset_prost_examples_small_highRes.png}
+    \end{minipage}
+    \caption{Example volumes from the main datasets we used. The hippocampus (left) and the prostate (right)}
+    \label{fig:datasets:prost_hippo_examples}
+\end{figure}
+
+Initially, we trained mainly with the hippocampus dataset from \cite{Antonelli:2022:MedSegmentationDecatlon} and later included the prostate dataset to test transferability. The hippocampus dataset contains 394 3D volumes, and the prostate dataset has 48. We always used the train-test split of 0.7 to 0.3, indexed by \cite{Antonelli:2022:MedSegmentationDecatlon}. Some of these labels are not public. We have filtered them out. Therefor, we have 260 vital hippocampus and 26 vital prostate 3D volumes. Since these are 3D datasets, but the models we used work with 2D data, we sliced each volume. Thus, we obtained 6505 training and 2765 test 2D volumes with the hippocampus dataset and 352 training and 133 test 2D volumes with the prostate dataset. Examples can be found in \autoref{fig:datasets:prost_hippo_examples}.
+
+\subsection*{Robustness}
+\label{methods:Robust}
+
+%%%% allgemein %%%%
+In order to make robustness statements about our models (\autoref{experiments:03.0:Intro}), we generated static datasets and evaluated them continuously on the dice score. We mainly used the hippocampus and prostate datasets from the Medical Segmentation Decathlon \cite{Antonelli:2022:MedSegmentationDecatlon}. 
+
+%%%% Augementation %%%%
+We used both augmented datasets to test robustness against artifacts when they were not included in the training set and against artifacts when they were included in the training set. For the augmentations, we used the RandomSpike function and a slightly modified version of the RandomNoise function from the 'Augmentation' package of the torchIO Python library \cite{torchIO}.
+
+%%%% DomainShifts %%%%
+To test against domain shifts, we used data from 4 prostate datasets from the  
+Medical Segmentation Decathlon \cite{Antonelli:2022:MedSegmentationDecatlon} (decathlon), 
+parts of the UCL prostate dataset \cite{Ahmed:2017:UCL_PROMIS},
+IEEE International Symposium on Biomedical Imaging \cite{Bloch:2015:ISBI_Data, Clark:2013:ISBI_TCIA} (ISBI), and the
+Initiative for Collaborative Computer Vision Benchmarking \cite{Lematre:2015:i2cvb} (i2vb). We then used these to generate several domain-shifted datasets artificially. To do this, we inserted single or multiple datasets from one dataset into another, trained on them, and evaluated them on the original datasets. In addition, we generated a dataset from all prostate data available to us, trained models with different losses on it, and evaluated them on the original and training datasets.
+
+
+%%%%% System %%%%%
+\subsection*{System}
+\label{experiments:intro:system}
+We mainly trained on a system with a single NVIDIA GeForce RTX 4090, 16 AMD Ryzen 7 5700G with Radeon graphics and 58.7 GiB of main memory. The RTX 4090 has 24 GiB of VRAM, which we mostly used completely. This system was used for most tests, especially all quantitative statements and comparisons.\
+Some qualitative statements are based on tests run on a other system, with seven Tesla T4, 40 Intel Xeon Silver 4210 CPU with 2.20GHz and 260GiB main memory. But there we always used only a single gpu and a single cpu. A Tesla T4 got around 16 GiB of VRAM. 
+
+
+%%% --- inputs ---
+\input{content/experiments/01_only_NQM/01.0_intro_and_everything}           % section
+\input{content/experiments/02_Dice_Bce_and_NQM/02.0_intro}                  % section
+\input{content/experiments/03_Robustness_Improving/03.0_intro}              % section

@@ -1,0 +1,26 @@
+\subsection{Further Mixed Dice-Bce-NQM Losses}
+\label{experiments:02.2:FurtherDice-Bce-NQMLosses}
+%%%% Intro %%%% 
+After and before we had our first successes with the DiceBceNQM loss (\autoref{experiments:02.1:diceBce+NQM}), in the sense that we were able to develop a loss that was no worse than the DiceBCE alone, we tried several other implementations to incorporate the NQM into the DiceBCE loss. However, they were all worse than the DiceBceNQM, or at least no better. However, since the DiceBceNQM was the simplest of the equally good losses, we decided, in the spirit of Occam's razor, to start the robustness experiments (\autoref{experiments:03.0:Intro}) with the DiceBceNQM. The more promising of these were tested again in \autoref{experiments:03.1.x:FurtherNQMLosses}, but showed no improvement over the DiceBceNQM in the experiments here without robustness testing, and were judged here to be more computationally expensive or were developed later and are therefore not yet available. These losses are presented in \autoref{experiments:03.1.x:FurtherNQMLosses} and are omitted here to avoid duplication, even though they are clearly better. For the sake of completeness, we list here the loss functions that are worth mentioning, even if they did not make it to the next round.
+
+For the case of the additive DiceBceNQM (\autoref{experiments:02.1:diceBce+NQM}), we also tested whether taking only Dice+NQM or only Bce+NQM had a positive effect, but as suspected, this was not the case.
+
+
+%%%% Offen / TODO %%%%
+\iffalse
+... hier stimmte irgendwas nicht ...
+... diceBceMasks (Bce with no reduction) was used and the nqm was put in as weight, before the mean was build ... therefore the nqm was calculated pixelwise ... but did not work
+\begin{align}
+    \mathrm{DiceBceMaskNQM}     &= \mathrm{DiceLoss} + \mathrm{mean} (NQM_mask \cdot \mathrm{BCE})\\
+    \mathrm{BCE}(x,y)           &=  -[y_n \cdot \log x_n + (1-y_n) \cdot \log (1-x_n)]\\
+    \mathrm{DiceLoss}           &= 1 - \frac{2 \cdot {\sum^D(y \cdot f_\theta(x))}}
+                                            {\sum^D(f_\theta(x)) + \sum^D(f_\theta(x))}
+\end{align}
+... diceBce SD
+... Bce weighted with NQM
+
+
+\fi
+%%%% Inputs %%%%
+\input{content/experiments/02_Dice_Bce_and_NQM/02.2.1_NQMLossOnPretrained}
+\input{content/experiments/02_Dice_Bce_and_NQM/02.2.2_DiceBce_mul_NQM}

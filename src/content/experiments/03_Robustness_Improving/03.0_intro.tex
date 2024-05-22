@@ -1,0 +1,59 @@
+\section{Robustness Improving}
+\label{experiments:03.0:Intro}
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{Graphics/datasets/datasets_hippo_randNoise_v2.png}\\
+    \vspace{5pt}
+    \includegraphics[width=\linewidth]{Graphics/datasets/datasets_hippo_normNoise_v2.png}
+    \caption{Different noise functions that we tried for augmentation on the hippocampus dataset \cite{Antonelli:2022:MedSegmentationDecatlon}. The Standard deviation of the Gaussian distribution from which the noise is sampled is given on the very left. Top 4: Random noise function from torchIO \cite{torchIO}. As can be seen, the same images are always strongly affected. Bottom 4: Our simple addition to the random noise function with additional max-normalization, which we used for our test runs. As can be seen, the noise is much more evenly distributed across different images. Bottom 4: From top to bottom with increasing standard deviation in the noise function.}
+    \label{fig:augemented:datasets:noise_problem}
+\end{figure}
+
+%%%% Allgemein Intro %%%%
+Since in \autoref{experiments:01.1:Only_NQM} some adaptations of the DiceBCE loss with the NQM, all in front of the DiceBceNQM (\autoref{eq:02.1:DiceBceNQM}), no performance degradation could be seen, but also no improvement over the original data, we performed corresponding dedicated robustness tests. These are presented in this section.
+
+Since \cite{kalkhof:2023:M3D-NCA} has already used the NQM to test the performance of models on augmented datasets in order to make robustness statements about the models, it is close to test, whether the DiceBceNQM improves robustness on a model, trained on perturbed data. To do this, we artificially perturb datasets. On the one hand with artificial augmentations to simulate different types of radiological image noise, on the other hand by adding individual data volumes from other datasets to our primary dataset to simulate data shifts.\\
+As datasets, we mainly used the hippocampus and prostate datasets from the Medical Segmentation Decathlon \cite{Antonelli:2022:MedSegmentationDecatlon}. For the data shift, others accordingly (see below).
+
+%%%% Augmentation %%%% 
+For the augmentations, we statically generated four series of 5 perturbed datasets and the original dataset so that all models are trained on the same data. We used the hippocampus and prostate datasets from \autocite{Antonelli:2022:MedSegmentationDecatlon}. The datasets we generated are composed as follows and were selected according to the following criteria \begin{itemize}
+    \item A series of 5 augmented datasets, each for the hippocampus and the prostate dataset, enriched with different proportions of spike artifacts.
+    In each case, the goal was to decrease the dice performance of our GT model by 30 percentage points when all data were augmented ("Spike 1.0"). The four other datasets were then spiked with the same intensity, but only 0.3, 0.2, 0.1, and 0.01 shares of the data. We used the random spike function from the TorchIO package \autocite{torchIO}.
+    We refer to these datasets as "Spike 1.0", "Spike 0.3", "Spike 0.2", "Spike 0.1", and "Spike 0.01", respectively. 
+    \item A series of 5 augmented datasets, each on the hippocampus and the prostate dataset, using the same procedure but with random noise. We used an adapted variant of the random noise function from the TorchIO package \autocite{torchIO}. We have extended it with a simple max-normalization so that the noise is distributed much more homogeneously across the different images of the dataset, and the noise function can still be used together with the other functions of the package. The difference can be seen in \autoref{fig:augmented:datasets:noise_problem}. The problem was that in the hippocampus dataset, the max-value for the volumes varies a lot, and the standard noise function does not normalize for this.
+    We refer to these datasets as "Noise 1.0", "Noise 0.3", "Noise 0.2", "Noise 0.1", and "Noise 0.01", respectively.
+\end{itemize}
+
+%%%% DomainShifts %%%%
+For the domain shifts, we used data from 4 prostate datasets from the  
+Medical Segmentation Decathlon \cite{Antonelli:2022:MedSegmentationDecatlon} (decathlon, decath), which we used as the main dataset. We inserted parts of other datasets into this dataset. Namely, parts of the prostate dataset from the PROMIS study \cite{Ahmed:2017:UCL_PROMIS} (ucl), the
+IEEE International Symposium on Biomedical Imaging prostate dataset \cite{Bloch:2015:ISBI_Data, Clark:2013:ISBI_TCIA} (isbi), and the
+Initiative for Collaborative Computer Vision Benchmarking Prostate dataset \cite{Lematre:2015:i2cvb} (i2vb). Here, we have generated a total of 2 series of datasets:\begin{itemize}
+    \item A series of the decathlon dataset and 3 "shift" datasets, where we have added a sample from another dataset to the decathlon dataset. We call these "decath," "shift 1 isbi," "shift 1 i2cvb," and "shift 1 ucl," respectively.
+    \item A series of the decathlon dataset and 3 "shift" datasets, where we added several samples from another dataset to the decathlon dataset because no or little change was seen in the shift 1 datasets. In each case, we aimed for a drop of about 15 points on the dice score. This dropped at very different rates, so we added four samples for ucl (dice drop 13.6), eight samples for i2cb (dice drop 15.8), and 12 samples for isbi (dice drop 16.7).
+    We call this "decath," "shift 12 isbi," "shift 8 i2cvb," and "shift 4 ucl," respectively.
+    \item As well as one dataset from all our available samples. We call this "all joined".
+\end{itemize}
+
+%%%% Beides %%%%
+To get as broad a picture as possible, we trained at least one series for each variation of our loss functions that we tested, both for the augmentations and domain shifts. For each series that we tested, we always trained one model for each dataset, creating cohorts of models. As ground truth, we trained a cohort for each series on the standard loss function of the models we used, the DiceBCE \autoref{methods:NCA}. We constantly evaluated the Dice score on all datasets of the series (\autoref{Tables}). For the domain shifts, we also tested on all original datasets (decath, isbi, i2cb, ucl) and the all joined datasets. To do this, we had to split the tables.
+
+
+%%%% Chapter Übersicht %%%%
+We first explored if robustness changes occur on augmented data, with the Backbone-NCA and the hippocampus dataset with augmentations, and performed the most extensive variation of experiments on this constellation (\autoref{experiments:03.1.0:backbone_hippo:intro}). After the first positive results regarding robustness on augmented data, we checked whether this could be transferred to another model, the Med-NCA, and another dataset, the prostate dataset, as well as domain shifts (\autoref{experiments:03.2.0:med_prost:intro}). Since the results here were somewhat mixed, we decided also to examine the transfers individually. So we tested a different model, the Med-NCA, on the same dataset (\autoref{experiments:03.3.0:med_hippo:intro_and_Augmented}), as well as the same model but on a different dataset (\autoref{experiments:03.4.0:backbone_prost:intro}).
+But, when using the Med-NCA on the hippocampus dataset, there is no difference at all between DiceBCE and DiceBceNQM. When using the Backbone-NCA from the prostate dataset, the results for augmentations and domain shifts were very similar to those obtained using the Med-NCA. There was only a difference in the all joined dataset, where the DiceBceNQM performed worse with the Backbone-NCA than the DiceBCE, while it performed better with the Med-NCA. In our opinion, this is also the most interesting point to pursue the DiceBceNQM further when using combined datasets with the already very powerful Med-NCA.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=\linewidth]{Graphics/datasets/datasets_hippo_augmented.png}\\
+    \vspace{5pt}
+    \includegraphics[width=\linewidth]{Graphics/datasets/datasets_prostate_all_augmented_highRes.png}
+    \caption{Top 3: Examples from the hippocampus dataset we used. Bottom 3: Examples from the prostate datasets we used. For each 3: from top to bottom: Original from \autocite{Antonelli:2022:MedSegmentationDecatlon}, augmented with noise, augmented with spikes. We used the same noise and spike functions as here for the other datasets we generated for our test series, where only parts were augmented. However, we used different noise and spike functions for the hippocampus and prostate, as we wanted to achieve a sufficient drop in performance for our ground truth model.}
+    \label{fig:augemented:datasets:augemented_hippo_prostate}
+\end{figure}
+
+%%% --- inputs ---
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/03.1.0_intro} % subsection
+\input{content/experiments/03_Robustness_Improving/03.2_medNCA_and_Prostate/03.2.0_intro}      % subsection
+\input{content/experiments/03_Robustness_Improving/03.3_medNCA_and_Hippocampus/03.3.0_intro_and_Augmented}   % subsection
+\input{content/experiments/03_Robustness_Improving/03.4_Backbone_and_Prostate/03.4.0_intro}    % subsection

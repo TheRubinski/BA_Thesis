@@ -1,0 +1,23 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}llll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{4}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train dataset} & decath & decath-shift-1-isbi & decath-shift-1-i2cvb & decath-shift-1-ucl\\\midrule[1.3pt]
+        % ---
+        diceBce     & decath          & 0.788 & 0.817 & 0.814 & 0.817\\
+        diceBceNQM  & decath          & 0.794 +.01 & 0.811 -.01 & 0.810 & 0.815\\\bottomrule%\rowcolor{BG}
+        % diceBce     & shift 1 isbi    & 0.769 & 0.763 & 0.767 & 0.768\\\rowcolor{BG}
+        % diceBceNQM  & shift 1 isbi    & 0.766 & 0.743 -.02 & 0.742 \textbf{-.03} & 0.745 -.02\\
+        % diceBce     & shift 1 i2cvb   & 0.725 & 0.727 & 0.737 & 0.748\\
+        % diceBceNQM  & shift 1 i2cvb   & 0.751 \textbf{+.03} & 0.750 +.02 & 0.742 +.01 & 0.754 +.01\\\rowcolor{BG}
+        % diceBce     & shift 1 ucl     & 0.804 & 0.764 & 0.760 & 0.753\\\rowcolor{BG}
+        % diceBceNQM  & shift 1 ucl     & 0.786 -.02 & 0.740 -.02 & 0.739 -.02 & 0.738 -.02\\
+        % DiceBce     & all joined      & 0.902 & 0.907 & 0.908 & 0.907\\
+        % DiceBceNQM  & all joined      & 0.903 & 0.910 & 0.910 & 0.910\\\hline
+        % XXX Nur die Ersten Beiden Zeilen macht Sinn. Die anderen bietet keinen informationstechnischen Mehrwert, weil einfach andere nicht Domainfremde samples in test-set geschoben wurden
+    \end{tabular}
+    \caption{\textbf{Single Domainshifts} Test on Trainsets (\autoref{experiments:03.2.2:med_prost:onDomainShifts}): \todo{caption}\todo{caption} ... same aber auf shift-datensätzen getestet ... (aus platzgründen 2te tabelle) \atJohn{... macht diese Tabelle (also diese Testreihe) überhaupt Sinn? Wegen dem Train-Test-Split = [0.7, 0.3] , ist hier ja vor allem auch eine sample-Verschiebung im Gange. (also bei den 3 letzten Spalten. Die erste macht Sinn)} \todo{only use decath + train dataset, since others are not intersting? or at least highlight somehow?}}
+    \label{tab:03.2.2:medNCA_Prost:domainShifts:OneOnOne}
+\end{table}

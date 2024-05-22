@@ -1,0 +1,22 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}lllllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train dataset} & decath & isbi & i2cvb & ucl & all joined\\\midrule[1.3pt]
+        % ---
+        diceBce     & decath          & 0.793 & 0.324 & 0.243 & 0.323 & 0.301\\
+        diceBceNQM  & decath          & 0.794 & 0.329 +.01 & 0.253 +.01 & 0.325 & 0.287 -.01\\\rowcolor{BG}
+        diceBce     & shift 1 isbi    & 0.772 & 0.441 & 0.256 & 0.321 & 0.367\\\rowcolor{BG}
+        diceBceNQM  & shift 1 isbi    & 0.767 -.01 & 0.335 \textbf{-.11} & 0.249 -.01 & 0.324 & 0.306 \textbf{-.06}\\
+        diceBce     & shift 1 i2cvb   & 0.736 & 0.340 & 0.343 & 0.327 & 0.356\\
+        diceBceNQM  & shift 1 i2cvb   & 0.753 +.02 & 0.196 \textbf{-.14} & 0.376 +.03 & 0.334 +.01 & 0.290 -.07\\\rowcolor{BG}
+        diceBce     & shift 1 ucl     & 0.804 & 0.407 & 0.247 & 0.326 & 0.320\\\rowcolor{BG}
+        diceBceNQM  & shift 1 ucl     & 0.783 -.02 & 0.321 \textbf{-.09} & 0.258 +.01 & 0.331 +.01 & 0.271 \textbf{-.05}\\
+        DiceBce     & all joined      & 0.904 & 0.812 & 0.658 & 0.821 & 0.722\\
+        DiceBceNQM  & all joined      & 0.903 & 0.824 +.01 & 0.684 +.03 & 0.888 \textbf{+.07} & 0.728 +.01\\\bottomrule
+    \end{tabular}
+    \caption{Med-NCA, \textbf{Single Domainshifts} and \textbf{all joined} (\autoref{experiments:03.2.2:med_prost:onDomainShifts}): Test on original datasets. For the all joined dataset the DiceBceNQM is significantly more robust. It is also more instable on the datasets with single volume shifts.}
+    \label{tab:03.2.2:medNCA_Prost:domainShifts:OneOnOriginals}
+\end{table}

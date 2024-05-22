@@ -1,0 +1,23 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}llll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{4}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train dataset} & decath & decath-shift-1-isbi & decath-shift-1-i2cvb & decath-shift-1-ucl\\\midrule[1.3pt]
+        % ---
+        diceBce     & decath         & 0.781 & 0.805 & 0.813 & 0.811\\
+        diceBceNQM  & decath         & 0.805 +.02 & 0.826 +.02 & 0.828 +.02 & 0.822 +.01\\\bottomrule %\rowcolor{BG}
+        % diceBce     & shift 1 isbi   & 0.775 & 0.773 & 0.773 & 0.771\\\rowcolor{BG}
+        % diceBceNQM  & shift 1 isbi   & 0.774 & 0.781 +.01 & 0.774 & 0.772\\
+        % diceBce     & shift 1 i2cvb  & 0.769 & 0.781 & 0.767 & 0.774\\
+        % diceBceNQM  & shift 1 i2cvb  & 0.758 -.01 & 0.767 -.01 & 0.759 -.01 & 0.757 -.02\\\rowcolor{BG}
+        % diceBce     & shift 1 ucl    & 0.802 & 0.787 & 0.791 & 0.792\\\rowcolor{BG}
+        % diceBceNQM  & shift 1 ucl    & 0.785 -.02 & 0.781 -.01 & 0.782 -.01 & 0.785 -.01\\
+        % DiceBce     & all joined     & 0.919 & 0.922 & 0.923 & 0.922\\
+        % DiceBceNQM  & all joined     & 0.905 -.01 & 0.913 -.01 & 0.912 -.01 & 0.911 -.01\\\hline
+        % XXX Nur die Ersten Beiden Zeilen macht Sinn. Die anderen bietet keinen informationstechnischen Mehrwert, weil einfach andere nicht Domainfremde samples in test-set geschoben wurden
+    \end{tabular}
+    \caption{\textbf{Single Domainshifts} Test on Trainsets (\autoref{experiments:03.4.2:Backbone_prost:DomainShifts}): \todo{caption}}
+    \label{tab:03.4.2:Backbone_Prost:domainShifts:OneOnOne}
+\end{table}

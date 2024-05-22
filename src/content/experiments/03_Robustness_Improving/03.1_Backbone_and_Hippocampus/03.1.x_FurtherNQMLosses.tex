@@ -1,0 +1,156 @@
+\subsubsection{Non-Linear NQM Losses}
+\label{experiments:03.1.x:FurtherNQMLosses}
+\begin{figure}[h!]
+    \centering
+        \begin{minipage}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Graphics/Experiments/3.1_alphas_logs.png}
+    \end{minipage} \hfill
+    \begin{minipage}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Graphics/Experiments/3.1_alphas_pow.png}
+    \end{minipage}
+    \begin{minipage}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Graphics/Experiments/3.1_alphas_root.png}
+    \end{minipage}
+    \caption{Non-linear functions we used for NQM losses (red), to test, if they perform similar or better in comparison to the linar DiceBce-$\alpha$NQM (blue). The order in the legend within a color also corresponds to the order in which the functions are superimposed in the plot. In the range of the NQM $(0, 1)$.}
+    \label{fig:furtherFunctionsForNQM}
+\end{figure}
+
+Since we have seen promising results with the linear NQM alone and with different alphas in terms of robustness to augmented data, we decided to test whether other loss functions with NQM could lead to similar or even better results. On the one hand, we chose functions that might converge more strongly because they weight higher NQM values more strongly than linear functions (logarithm, power, and root functions) or might converge similarly well. Examples of these can be seen in \autoref{fig:furtherFunctionsForNQM}. Each is compared to the linear case for the three slopes we tested in \autoref{experiments:03.1.4:backbone_hippo:alpha} (blue). 
+
+For our experiments here, we used a pretrained model that we first trained for 500 epochs on the DiceBCE. Then, we trained this model for another 100 epochs on the corresponding loss.
+We trained a cohort for each loss to be tested. Each cohort was trained on the original and with spikes augmented hippocampus datasets because this is where we have seen the clearest results with the DiceBceNQM so far. So, there are six datasets in total and one model for each dataset in each cohort. For the comparisons here, we assumed the DiceBceNQM, i.e., corresponding to $\alpha=1.0$, and trained one cohort accordingly.
+
+%%% log NQM %%%
+\paragraph{Logarithmic NQM Loss}
+\label{experiments:03.1.5:backbone_hippo:logNQM}
+Since the NQM assumes a value between 0 and 1, and the logarithm (log) falls to 0 faster than linearly, particularly small values are rewarded very highly with the log, i.e., the total loss is greatly reduced. This means that the NQM's share of the total loss is no longer capped (unlike in the other cases). Since this negative growth occurs at different rates with different bases, we tested several log functions with different bases. Therefore, the logNQM base B is defined as:
+
+\begin{align}
+    \text{logNQM base B} &:= 1 - \mathrm{Dice} + \mathrm{Bce} + {\color{red}\log_B}\mathrm{NQM}
+\end{align}
+
+We decided to test bases 2, e, 3, and 10. So, we trained a total of 4 cohorts on the logNQM. As seen in \autoref{tab:3.1.5:logNQM}, using a logarithmic NQM leads to mixed results compared to the linear NQM. In particular, on the original dataset, the logNQM consistently leads to a degradation of up to 9 points on the dice. On the other hand, when training on the augmented dataset, the logNQM results in a slight improvement of up to 3 points. \autoref{tab:3.1.5:logNQM_aggregated} shows various aggregations of the improvements and deteriorations in scores for each cohort. Again, there is an overall almost neutral but negative mean on the signed differences and a range shift clearly into the negative.\\\
+Our implementation of the NQM with this loss could not further improve the robustness. 
+% \todo{evt. Fehler bei den Labels zeigen, die mit höherer Base schlimmer werden ... war hier relativ klar zu sehen, bei manchen samples ... dann Verknüpfung nach onlyNQM, weil vermutlich ähnlihcer grund ... wobei hier der Dice immernoch über die 100 epochen gefallen ist.}
+\iftable
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/tables/table_03.1.6_powNQM}
+\fi
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|l|l|l|l|}
+        \hline
+        \bfseries logNQM base & mean on signed & mean on absolute & sum on absolute & range\\\hline
+        % ---
+        2   & -0.0004 & 0.0063 & 0.226 & ( -0.053, +0.030)\\
+        e   & -0.0011 & 0.0076 & 0.275 & ( -0.038, +0.033)\\
+        3   & -0.0031 & 0.0074 & 0.266 & ( -0.086, +0.014)\\
+        10  & -0.0011 & 0.0056 & 0.2   & ( -0.037, +0.024)\\\hline
+        % ---
+    \end{tabular}
+    \caption{Aggregations over the improvements$(+)$ and deteriorations$(-)$, using the logNQM losses compared to the DiceBceNQM on Dice. All values of the experiments used for this Aggregations: \autoref{tab:3.1.5:logNQM}}
+    \label{tab:3.1.5:logNQM_aggregated}
+\end{table}
+
+
+%%% pow NQM %%%
+\paragraph{Power NQM Loss}
+\label{experiments:03.1.6:backbone_hippo:powNQM}
+As one can see in \autoref{fig:furtherFunctionsForNQM}, the power function is the opposite of the log function. While the log function rewards particularly small values in the range $(0,1)$ more, the power function punishes exceptionally high values. We have implemented this loss due to the range of the NQM in $(0,1)$ by choosing a constant base and placing the NQM in the exponent. Conversely, when using the NQM to the pow of something, growth is slower than linear in this interval.
+Therefore, the powNQM base is defined as B:
+
+\begin{align}
+    \text{powNQM base B} &:= 1 - \mathrm{Dice} + \mathrm{Bce} + {\color{red} \mathrm{B}}^\mathrm{NQM}
+\end{align}
+
+Here, we have trained a cohort on base 3. The results are shown in \autoref{tab:3.1.6:powNQM}. The aggregated improvements and degradations are given in \autoref{tab:3.1.6:powNQM_aggregated}. As can be seen, the powNQM hardly leads to any change, which is evident when looking at the corresponding base function in \autoref{experiments:03.1.x:FurtherNQMLosses}, since the pow function with base 3 behaves almost linearly here. However, the tendency here is similar to logNQM, that models trained on the not augmented data perform worse on the augmented data. The reverse does not seem to be the case.
+Therefore, it might be interesting to test a higher base again, but this was not done in the context of this work \autoref{future_work}.
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|l|l|l|l|}
+        \hline
+        \bfseries pow NQM base & mean on signed & mean on absolute & sum on absolute & range\\\hline
+        % ---
+        3 & -0.0008 & 0.0073 & 0.263 & (-0.046, +0.024)\\\hline
+        % ---
+    \end{tabular}
+    \caption{Agreggations over the improvements$(+)$ and deteriorations$(-)$, using the powNQM compared to the DiceBceNQM on Dice. All values of the experiments used for theses Aggregations: \autoref{tab:3.1.6:powNQM}}
+    \label{tab:3.1.6:powNQM_aggregated}
+\end{table}
+
+\iftable
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/tables/table_03.1.5_logNQM}
+\fi
+
+%%% sqrt NQM %%%
+\paragraph{Square Root NQM Loss}
+\label{experiments:03.1.7:backbone_hippo:sqrtNQM}
+As seen in \autoref{fig:furtherFunctionsForNQM}, the root function in the interval $(0,1)$ decays to zero, similarly to the logarithmic function. However, they do not try to reach $-\infty$ but fall to zero. This means that very small values in the root functions have very little weight. At the same time, there is a low upper bound of one that the function can assume. That way, the NQM's share of the total loss is limited, in contrast to the logarithmic function in particular, which has no limit at all, but also to the power functions, where the upper bound corresponds to the base and grows accordingly. We tested the square root function since this shows the described behavior most clearly. 
+Therefore, the sqrtNQM is defined as:
+
+\begin{align}
+    \text{sqrtNQM} &:= 1 - \mathrm{Dice} + \mathrm{Bce} + \sqrtRed{\text{NQM}} 
+\end{align}
+
+Again, we trained a cohort on this loss. The results are shown in \autoref{tab:3.1.7:sqrtNQM}. The aggregated improvements and deteriorations are shown in \autoref{tab:3.1.7:sqrtNQM_aggregated}. Again, there does not appear to be much difference from the linear implementation. There may be a slight improvement in the minimally augmented dataset (spike 0.01). At the same time, there is no degradation in the not augmented dataset. This is different for logNQM and powNQM. This makes the sqrtNQM a candidate for speeding up the approach. Further experiments with domain shifts and other datasets would be interesting, too. Possibly also as cubic root or a mixture of pow and root function, in the sense of powNQM -1 + sqrtNQN (\autoref{future_work}). 
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|c|l|l|l|l|}
+        \hline
+        \bfseries sqrt NQM & mean on signed & mean on absolute & sum on absolute & range\\\hline
+        % ---
+        & -0.0023 & 0.0084 & 0.304 & (-0.026, +0.033)\\\hline
+        % ---
+    \end{tabular}
+    \caption{Agreggations over the improvements$(+)$ and deteriorations$(-)$, using the sqrtNQM compared to the DiceBceNQM on Dice. All values of the experiments used for theese Aggregations: \autoref{tab:3.1.7:sqrtNQM}}
+    \label{tab:3.1.7:sqrtNQM_aggregated}
+\end{table}
+\iftable
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/tables/table_03.1.7_sqrtNQM}
+\fi
+\iffalse
+%%% SD as weights in BCE .... I can not figure out anymore, what this loss acctually was about ... looks, like I stuck in debugging and tried to implement it that way, it is discribed here, but the acctual loss, used in the experiment was only Bce(SD) for NQM ... so only logarithmically weighted SD in normal NQM .... should be of no intrest so far ...%%%
+\paragraph{SD as weights in BCE}
+\label{experiments:03.1.8:backbone_hippo:stdd BCE}
+.\\\note{XXX HIER WEITER XXX Wie Paragraphs above XXX}
+
+Bis jetzt haben wir für alle Versuche den NQM zum loss hinzugefügt, wie in \autoref{eq:02.1:Only_NQM} definiert. Der NQM besteht dabei aus zwei Teilen, der Standartabweichung (SD) und dem Mean. Dabei wird zur Bildung des NQM die SD mit dem mean normalisiert. Der Bce ist hier ähnlich zum NQM, auch dieser wird mit dem mean normalisiert. Insofern ist es naheliegend, zu testen, ob es einen Unterschied macht, den NQM und den Bce vor der Normalisierung zusammenzufassen. Also, den Bce mit dem SD zu gewichten und anschließend zu normalisieren. Für $N$ (stacksize) different predictions $x_i$ of an NCA for the same image volume $x$, with the target or groundthruth label $y$ and the image size $M$:
+
+\begin{align*}
+    \text{Dice-SDBce} &:= 1 - \mathrm{Dice} + {\color{red}\mathrm{SDBce}}\\[10pt]
+    \text{SDBce}      &:=\min\left(1, \quad \frac{\sum_{n=1}^M (\text{SDBce}_n) +1} {\sum_{n=1}^M (\mu_n) +1}\right)\\[10pt]
+    \text{SDBce}      &:=  - SD_n \cdot [y_n \cdot \log v_n + (1-y_n) \cdot \log (1-v_n)]\\[10pt]
+    SD                &:= \sqrt{\frac{\sum^N_{i=1}(v_i-\mu)^2}  {N} + \varepsilon}\\[10pt]
+    \mu               &:= \frac{\sum^N_{i=1}v_i}  {N}
+\end{align*}
+
+Der mean($\mu$) wird also genau wie in \autoref{eq:02.1:Only_NQM} über dem output stack gebildet. Der BCE ist, wie in \autoref{methods:NCA:Models} aber ohne mean-normalisierung. Den SD haben wir hier, wie sonst den NQM, zusätzlich vor der gewichtung des Bce, auf das Intervall $(0,1)$ gecroped und um $\varepsilon$ ergänzt. For the same reason as in \autoref{experiments:02.2:diceBce+NQM}. Es wäre natürlich auch interessant zu sehen, ob es einen Performanceunterschied macht, hier nicht zu croppen \autoref{future_work}. 
+
+ ... tatsächlich gleich gut, also möglicherweise $\mu$ -normalisierung nicht nötig.
+
+\todo{XXX Evaluiere (explizit in schriftlaut) alle Augmentationen gemäß der Robustheit gegenüber 1) der performance, wenn Artefakte im Trainingssatz enthalten waren, wie auch, wenn diese nicht im Traingssatz enthalten waren. XXX}
+XXX neue Tabelle drinn XXX
+
+\begin{table}[h!]
+    \centering
+    \begin{tabular}{|l|l|l|l|l|}
+        \hline
+        \bfseries & mean on signed & mean on absolute & sum on absolute & range\\\hline
+        % ---
+        \bfseries SD & -0.0007 & 0.0049 & 0.178 & (-0.032, +0.017)\\\hline
+        % ---
+    \end{tabular}
+    \caption{Agreggations over the improvements$(+)$ and deteriorations$(-)$, using the SD compared to the DiceBceNQM on Dice. All values of the experiments, used for this Aggregations: \autoref{tab:3.1.8:stddBCE}}
+    \label{tab:3.1.8:stddBCE_aggregated}
+\end{table}
+
+Bereits in \autoref{experiments:02.0:intro} hatten wir auch 
+\iftable
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/tables/table_03.1.8_stddBCE}
+\fi
+\fi

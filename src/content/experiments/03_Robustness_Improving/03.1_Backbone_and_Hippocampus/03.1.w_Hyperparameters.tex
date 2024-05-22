@@ -1,0 +1,30 @@
+\subsubsection{Hyperparameters}
+\label{experiments:03.1.w:Hyperpatameters}
+
+%%% was 03.1.3
+\paragraph{stackSize}   
+\label{experiments:03.1.3:backbone_hippo:stackSize}
+
+In our experiments so far, we have used a \textit{stacksize} ($N$) of 3 for the DiceBceNQM, as defined in \autoref{eq:02.1:DiceBceNQM}. This seemed sufficient so far since different stack sizes had no effect when tested on not augmented data only \autoref{experiments:02.0:intro}. We want to test if these results also hold for augmented data. Nevertheless, training with the DiceBceNQM and a stacksize of 3 already takes about 2.8 times the real-time and 13.19 times the process time compared to the DiceBCE (\autoref{fig:DiceBCE+NQM:Pretrained:Speedcompare}). We trained a cohort of models on a stacksize of 6 but only on 3 spike datasets. We had to reduce the batch size to 16 because there was not enough VRAM for that large stacksize. Therefore, the models with a stacksize of 3, which we used for comparison, are also trained with a batch size of 16. The results can be seen in \autoref{tab:3.1.3:higherStacksize}. As one can see, there is no positive or negative effect of increasing the stacksize.
+
+Since increasing the stacksize had no effect, we also tested whether a stacksize of 2 would be sufficient and, therefore, cheaper in terms of computation. This experiment was done later on a pretrained model with the stacksize we used elsewhere. As seen in \autoref{tab:3.1.3:smallerStacksize}, it does not worsen the results. Therefore, a stacksize of 2 can be considered sufficient or better, especially concerning the non-enlarged dataset. Unfortunately, this experiment was carried out very late, so our other experiments are still done on stacksize 3.
+% Aggregated values are given in \autoref{tab:3.1.3:stackSize_aggregated}
+\iftable
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/tables/table_03.1.3_stackSize}
+\fi
+
+%%% alpha was 03.1.4  %%%
+\paragraph{alpha}   
+\label{experiments:03.1.4:backbone_hippo:alpha}
+Here, we have checked whether it makes a difference if the proportion of the NQM in the total DiceBceNQM is varied. To do this, we added the parameter alpha ($\alpha$) so that the previous DiceBceNQM corresponds to $\alpha=1.0$, i.e:
+
+\begin{align}
+    \text{DiceBce-$\alpha$NQM} &:= 1 - \mathrm{Dice} + \mathrm{Bce} + {\color{red}\alpha}\cdot\mathrm{NQM}
+\end{align}
+
+Where the NQM is defined as in \autoref{eq:02.1:Only_NQM}. We have trained two cohorts. One with halved and one with doubled $\alpha$. We trained all models for 100 epochs each on a pretrained model, as in \autoref{experiments:03.1.2:backbone_hippo:pretrained}. The results in \autoref{tab:3.1.4:alpha} shows that a double $\alpha$ further increases the robustness. This is especially true when training on the less augmented dataset, and there is no degradation when training on not augmented data.
+
+Beyond these variations on the same loss function with different alphas, we tested other loss functions that should converge more strongly and penalize higher NQM values more strongly. We will look at this in the following.
+\iffalse
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/tables/table_03.1.4_alphas}
+\fi

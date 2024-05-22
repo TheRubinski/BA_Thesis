@@ -1,0 +1,16 @@
+\subsection{Med-NCA on Prostate}
+\label{experiments:03.2.0:med_prost:intro}
+After \autoref{experiments:03.1.1:backbone_hippo:spike_noise} showed that the robustness of the backbone model on the hippocampus dataset can be improved with the DiceBceNQM, we tested whether this could be transferred to a more complex model and a different dataset. We used the Med-NCA (\autoref{methods:NCA:Med-NCA}) and the medical segmentation decathlon prostate dataset \cite{Antonelli:2022:MedSegmentationDecatlon}.\\
+For this purpose, we artificially augmented the prostate dataset, as well as the hippocampus dataset before, with spikes and random noise, as described in \autoref{experiments:03.0:Intro}. We also generated a series of perturbed datasets with domain shifts for the prostate dataset. Again, as described in \autoref{experiments:03.0:Intro}. \\
+However, this led to much more mixed results than the backbone NCA on the hippocampus dataset (\autoref{experiments:03.1.1:backbone_hippo:spike_noise}), as we will see in this subsection.
+In all cohorts, there were some training datasets where DiceBceNQM provided significant improvements over DiceBCE alone, but also some datasets where there was significant degradation. 
+In the augmentations, which initially showed enormous scatter on the fist training setup, the differences between DiceBCE and DiceBceNQM became significantly smaller by extending the training cycle. Not only, but also to the disadvantage of DiceBceNQM. 
+The results of the domain shifts can be divided into two parts. On the one hand, there were similar or even worse results on datasets where only a few samples were added, but which we could not resolve or improve.
+On the other hand, there were significant improvements with the DiceBceNQM on the dataset merged from several sources, the all joined.
+
+However, not only because of the poor adaptation to the augmented and shifted datasets, the question arises whether much simpler techniques than using the DiceBceNQM instead of the DiceBCE might achieve more significant effects, such as extending the training time (in the best case up to convergence), increasing the batch size, or even targeted or selective batch duplication. Especially regarding the optimal use of available resources, the DiceBceNQM requires a lot of graphics memory due to the multiple output generation.
+
+
+%%% --- inputs ---
+\input{content/experiments/03_Robustness_Improving/03.2_medNCA_and_Prostate/03.2.1_Augmented_spikesAndNoise}
+\input{content/experiments/03_Robustness_Improving/03.2_medNCA_and_Prostate/03.2.2_DomainShifts}

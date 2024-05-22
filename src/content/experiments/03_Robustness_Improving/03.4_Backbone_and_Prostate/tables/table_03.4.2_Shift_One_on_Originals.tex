@@ -1,0 +1,22 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}lllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train dataset} & decath & isbi & i2cvb & ulc & all joined\\\midrule[1.3pt]
+        % ---
+        diceBce     & decath           & 0.776 & 0.427 & 0.236 & 0.313 & 0.370\\
+        diceBceNQM  & decath           & 0.795 +.02 & 0.486 \textbf{+.06} & 0.254 +.02 & 0.322 +.01 & 0.383 +.01\\\rowcolor{BG}
+        diceBce     & shift 1 isbi     & 0.782 & 0.541 & 0.252 & 0.327 & 0.424\\\rowcolor{BG}
+        diceBceNQM  & shift 1 isbi     & 0.774 -.01 & 0.527 -.01 & 0.283 \textbf{+.03} & 0.327 & 0.402 -.02\\
+        diceBce     & shift 1 i2cvb    & 0.767 & 0.354 & 0.274 & 0.332 & 0.355\\
+        diceBceNQM  & shift 1 i2cvb    & 0.765 & 0.343 -.01 & 0.256 -.02 & 0.330 & 0.361 +.01\\\rowcolor{BG}
+        diceBce     & shift 1 ucl      & 0.806 & 0.511 & 0.237 & 0.345 & 0.377\\\rowcolor{BG}
+        diceBceNQM  & shift 1 ucl      & 0.786 -.02 & 0.483 \textbf{-.03} & 0.257 +.02 & 0.343 & 0.382 +.01\\
+        DiceBce     & all joined       & 0.919 & 0.905 & 0.759 & 0.923 & 0.794\\
+        DiceBceNQM  & all joined       & 0.904 -.02 & 0.894 -.01 & 0.697 \textbf{-.06} & 0.933 +.01 & 0.800 +.01\\\bottomrule
+    \end{tabular}
+    \caption{Backbone-NCA, \textbf{Single Domainshifts} and \textbf{all joined} (\autoref{experiments:03.4.2:Backbone_prost:DomainShifts}): Tests on original datasets. Very divergent and mixed results. But a lot less divergent then for the Med-NCA.}
+    \label{tab:03.4.2:Backbone_Prost:domainShifts:OneOnOriginals}
+\end{table}

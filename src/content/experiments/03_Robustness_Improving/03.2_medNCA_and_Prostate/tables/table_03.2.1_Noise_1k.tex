@@ -1,0 +1,27 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}llllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train set} & original & Noise 1.0 & Noise 0.3 & Noise 0.2 & Noise 0.1 & Noise 0.01\\\midrule[1.3pt]
+        % ---
+        DiceBCE        & original    & 0.794 & 0.519 & 0.688 & 0.790 & 0.726 & 0.794\\
+        DiceBceNQM     & original    & 0.774 -.02 & 0.559 +.04 & 0.683 & 0.774 -.02 & 0.726 & 0.767 -.03\\\rowcolor{BG}
+        DiceBCE        & Noise 1.0   & 0.773 & 0.777 & 0.778 & 0.757 & 0.764 & 0.767\\\rowcolor{BG}
+        DiceBceNQM     & Noise 1.0   & 0.754 -.02 & 0.780 & 0.774 & 0.754 & 0.754 -.01 & 0.755 -.01\\
+        DiceBCE        & Noise 0.3   & 0.826 & 0.717 & 0.782 & 0.819 & 0.821 & 0.819\\
+        DiceBceNQM     & Noise 0.3   & 0.819 -.01 & 0.746 +.03 & 0.802 +.02 & 0.819 & 0.820 & 0.821\\\rowcolor{BG}
+        DiceBCE        & Noise 0.2   & 0.777 & 0.616 & 0.706 & 0.772 & 0.749 & 0.778\\\rowcolor{BG}
+        DiceBceNQM     & Noise 0.2   & 0.798 +.02 & 0.678 \textbf{+.06} & 0.787 \textbf{+.08} & 0.797 +.03 & 0.798 \textbf{+.05} & 0.798 +.02\\
+        DiceBCE        & Noise 0.1   & 0.798 & 0.757 & 0.780 & 0.794 & 0.779 & 0.795\\
+        DiceBceNQM     & Noise 0.1   & 0.817 +.02 & 0.708 \textbf{-.05} & 0.778 & 0.818 +.02 & 0.790 +.01 & 0.815 +.02\\\rowcolor{BG}
+        DiceBCE        & Noise 0.01  & 0.838 & 0.754 & 0.811 & 0.836 & 0.821 & 0.833\\\rowcolor{BG}
+        DiceBceNQM     & Noise 0.01  & 0.800 -.04 & 0.720 -.03 & 0.763 \textbf{-.05} & 0.799 -.04 & 0.769 \textbf{-.05} & 0.798 -.03\\\hline
+        % --- 2k --- 
+        2k DiceBCE     & Noise 0.01  & 0.826 & 0.766 & 0.801 & 0.829 & 0.821 & 0.832\\
+        2k DiceBceNQM  & Noise 0.01  & 0.798 -.03 & 0.694 \textbf{-.07} & 0.771 -.03 & 0.796 -.03 & 0.776 -.04 & 0.796 -.04\\\bottomrule
+    \end{tabular}
+    \caption{Med-NCA, prostate dataset \textbf{Augmented with Noise} 1000 epochs (\autoref{experiments:03.2.1:med_prost:augmented}): Mixed and divergent result. With this setting the approach becomes unstabel. However, this could be changed with a pretrained model for spikes (\autoref{tab:03.2.1:medNCA_Prost:on_Spike:3kepochs}). For noise this experiment was not transfered to the pretrained setting in the context of this thesis.}
+    \label{tab:03.2.1:medNCA_Prost:on_Noise}
+\end{table}

@@ -1,0 +1,11 @@
+\section{Dice, Bce and NQM}
+\label{experiments:02.0:intro}
+We decided to investigate whether it is possible to include the NQM in the training loop to improve the robustness of the model by implementing the NQM directly as a loss function or using it within the training loop. However, as seen in \autoref{experiments:01.0:Into}, it is technically possible but not very useful to use the NQM as a loss on its own. Therefore, in this section, we will focus on our attempts to implement a loss function that takes the NQM into account but not depends only on it. In \autoref{experiments:02.1:diceBce+NQM}, we will see the implementation that has worked best here, and which we have also used for most of the robustness improvement experiments (\autoref{experiments:03.0:Intro}). For completeness, the rest of this section will show some other attempts at loss functions that worked worse or not at all and that we discarded after testing them here. We also tested some other implementations not presented here, particularly those we re-tested in \autoref{experiments:03.1.x:FurtherNQMLosses}. These did not show any improvement over the DiceBceNQM loss here. They will be presented in \autoref{experiments:03.1.0:backbone_hippo:intro} for compactness.
+
+
+The goal for the experiments in this section was to implement the NQM in the loss function so that the quality of the model improves or at least does not degrade. So we can build on this for robustness improvement. Therefore, we are working on the original dataset, and we used the Backbone-NCA and the Medical Segmentation Decathlon Hippocampus dataset \cite{Antonelli:2022:MedSegmentationDecatlon} and the Backbone-NCA default loss function, the DiceBCE, for comparison.
+
+
+%%% --- inputs ---
+\input{content/experiments/02_Dice_Bce_and_NQM/02.1_DiceBce+NQM}                 % subsection
+\input{content/experiments/02_Dice_Bce_and_NQM/02.2_Further_Dice_Bce_NQM_Losses} % subsection 

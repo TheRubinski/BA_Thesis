@@ -1,0 +1,38 @@
+\subsection{Med-NCA on Hippocampus}
+\label{experiments:03.3.0:med_hippo:intro_and_Augmented}
+Due to the different results regarding the robustness improvement potential in \autoref{experiments:03.1.1:backbone_hippo:spike_noise} and \autoref{experiments:03.2.0:med_prost:intro}, we decided to investigate the transferability to another model \textit{and} another dataset separately. In this subsection, we will look at the transferability of the results from the hippocampus dataset to another model, the Med-NCA. In the next section, we will look at the transferability to another dataset with the same model as in \autoref{experiments:03.1.1:backbone_hippo:spike_noise}, the Backbone-NCA.
+
+Therefor, we train a cohort on the hippocampus spike series on a pretrained model. The results can be seen in \autoref{tab:03.3.medNCA_Hippo_Spikes}. There are absolutely no differences between the DiceBCE and the DiceBceNQM with the Med-NCA. Considering that the same test with the Backbone-NCA showed apparent differences of up to +9 points (\autoref{tab:03.1.1:DiceBCE+NQM_vs_DiceBCE_on_Spike} and \autoref{tab:03.1.1:DiceBCE+NQM_vs_DiceBCE_on_Spike}), it is reasonable to assume that the Med-NCA, due to its architecture on top of the DiceBCE, leads to equivalent robustness here. This assumption is supported by the fact that the Med-NCA performed even better for domain shifts on the prostate dataset with the DiceBCE than with the DiceBceNQM ((\autoref{experiments:03.2.0:med_prost:intro}). With the one, but not negligible, exception from the all joined dataset.
+
+Of course, validating or counter-testing this statement with other datasets is still essential, especially concerning domain shifts.
+
+\iffalse
+mean: 0.0005
+mean on absoulte values: 0.0007
+sum: 0.018
+sum on absoulte values: 0.024
+amax: 0.003
+amax on absoulte values: 0.003
+amin: -0.002
+amin on absoulte values: 0.0
+
+==> NO DIFFRENCES AT ALL 
+... so it seams, MedNCA outperformces the DiceBceNQM in robustness allready with a diffrent technic or its improved architecture, ... 
+
+
+mean: 0.0005
+mean on absoulte values: 0.0007
+sum: 0.018
+sum on absoulte values: 0.024
+amax: 0.003
+amax on absoulte values: 0.003
+amin: -0.002
+amin on absoulte values: 0.0
+
+==> NO DIFFRENCES AT ALL 
+... so it seams, MedNCA outperformces the DiceBceNQM in robustness allready with a diffrent technic or its improved architecture, ... 
+\fi
+\iftable
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/tables/table_03.1.1_Aug_spike_noise}
+\input{content/experiments/03_Robustness_Improving/03.3_medNCA_and_Hippocampus/tables/table_03.3_medNCA_Hippo}
+\fi

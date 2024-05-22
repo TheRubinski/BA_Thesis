@@ -1,0 +1,25 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cl!{\vrule width 1.3pt}llllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries pretrained} & \textbf{train set} & original & Spike 1.0 & Spike 0.3 & Spike 0.2 & Spike 0.1 & Spike 0.01\\\midrule[1.3pt]
+        % ---
+        no  & original           & 0.881 & 0.662 & 0.812 & 0.811 & 0.858 & 0.881                            \\
+        yes & original           & 0.879 & 0.639 -.02 & 0.802 -.01 & 0.801 -.01 & 0.857 & 0.879             \\\rowcolor{BG}
+        no  & Spike 1.0          & 0.867 & 0.817 & 0.864 & 0.863 & 0.865 & 0.866                            \\\rowcolor{BG}
+        yes & Spike 1.0          & 0.874 +.01 & 0.812 & 0.871 +.01 & 0.867 & 0.872 +.01 & 0.874 +.01        \\
+        no  & Spike 0.3          & 0.874 & 0.750 & 0.853 & 0.859 & 0.870 & 0.875                            \\
+        yes & Spike 0.3          & 0.872 & 0.757 +.01 & 0.858 +.01 & 0.859 & 0.868 & 0.872                  \\\rowcolor{BG}
+        no  & Spike 0.2          & 0.878 & 0.751 & 0.843 & 0.863 & 0.869 & 0.878                            \\\rowcolor{BG}
+        yes & Spike 0.2          & 0.879 & 0.727 -.02 & 0.830 -.01 & 0.862 & 0.869 & 0.879                  \\
+        no  & Spike 0.1          & 0.875 & 0.754 & 0.849 & 0.860 & 0.869 & 0.876                            \\
+        yes & Spike 0.1          & 0.875 & 0.735 -.02 & 0.842 -.01 & 0.855 -.01 & 0.866 & 0.875             \\\rowcolor{BG}
+        no  & Spike 0.01         & 0.877 & 0.644 & 0.801 & 0.811 & 0.852 & 0.877                            \\\rowcolor{BG}
+        yes & Spike 0.01         & 0.878 & 0.681 \textbf{+.04} & 0.816 +.01 & 0.833 +.02 & 0.861 +.01 & 0.877        \\\bottomrule
+    \end{tabular}
+    \caption{\textbf{Pretrained Models} (\autoref{experiments:03.1.2:backbone_hippo:pretrained}): Comparrison between pretrained models and full trained ones. For the pretrained models, we used the DiceBCE for the first 500 epochs, since it is faster, and trained after that on the DiceBceNQM for additional 100 epochs. For the not pretrained models we trained full 600 epochs on DiceBceNQM as baseline for the pretrained.\\
+    The pretrained models are as good, as the full trained ones. Therefor they can be used to speed up training.}
+    \label{tab:3.1.2:DiceBCE+NQM:Pretrained}  
+\end{table}

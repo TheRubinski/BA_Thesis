@@ -1,0 +1,40 @@
+\subsubsection{Augmented Datasets}
+\label{experiments:03.2.1:med_prost:augmented}
+For the augmentations on the prostate dataset, as with the hippocampus dataset, we augmented one series with noise and one series with spikes, as described in \autoref{experiments:03.0:Intro}. We trained a cohort of models on each of these using the standard setup form \cite{kalkhof:2023:medNCA}.
+
+As can be seen in \ref{tab:03.2.1:medNCA_Prost:on_Noise} and \ref{tab:03.2.1:medNCA_Prost:on_Spike}, the results from \ref{experiments:03.1.1:backbone_hippo:spike_noise} do not generalize here. Overall, there are models in both cohorts that perform significantly better than DiceBCE (e.g., on Noise 0.2 and Spike 0.2), as well as models that perform significantly worse or at least very mixed (e.g., on Spike 1.0 and Noise 0.01). In particular, the models trained on very low-disturbance data (Spike 0.01 and Noise 0.01) perform worse with DiceBceNQM than with DiceBCE. 
+Since the med-NCAs, here in the standard setup of \cite{kalkhof:2023:medNCA} with 1000 epochs, do not seem to have been trained to convergence, we trained the models of interest for the robustness question on the Spike 0.01 and Noise 0.01 datasets (last two lines in \autoref{tab:03.2.1:medNCA_Prost:on_Spike} and \autoref{tab:03.2.1:medNCA_Prost:on_Noise}). The results of the noise series have remained the same overall but shifted across the different datasets. For the spike dataset, they have improved slightly but were already slightly worse than the DiceBCE.
+
+For the models trained on noise, the results are also more ambiguous. For the models trained on spikes, the results are more evident. Interestingly, for the models trained on spike, the models trained on Spike 0.2 and Spike 0.3 performed better with DiceBceNQM than those trained on DiceBCE alone. Overall, the models trained on the original dataset also performed worse on the noisy datasets than on the Backbone-NCA test series. It could be that these datasets are simply more challenging.
+
+After seeing in \autoref{experiments:03.1.2:backbone_hippo:pretrained} that pretraining can bring an improvement, we tried it again with Med-NCA and prostate. But this time, only on the spike dataset. The results can be seen in \autoref{tab:03.2.1:medNCA_Prost:on_Spike:3kepochs}. Compared to the cohort trained with 1000 epochs, the scatter between the DiceBCE and DiceBceNQM models has decreased massively. The range of deviations is from $(-0.07, +0.14)$ to $(-0.02, +0.05)$. The sum of deviations (unsigned, absolute values) across the cohort decreased from 1.062 to 0.272.
+At the same time, the DiceBceNQM shows an improvement of 5 points from 0.58 to 0.64 on one model (spike 0.3) but is otherwise neutral with max $\pm$ 2 points, especially on the interesting original and spike 0.01 datasets. 
+
+In this way, however, we were able to eliminate the negative effects of the previous setting on the Med-NCA. For the Med-NCA, using 1000 epochs on a pretrained model is a lot more stable. Except for one case, the DiceBceNQM no longer makes a difference here ($\pm$2). Therefor the approach is stable now and no longer makes things worse in this setting.
+So we are confident that the positive results from \autoref{experiments:03.1.1:backbone_hippo:spike_noise} with the DiceBceNQM regarding radiological noise can be generalized.
+\iffalse
+--- Spike 1k
+mean: 0.0076
+mean on absoulte values: 0.0295
+sum: 0.272
+sum on absoulte values: 1.062
+range: (-0.069, +0.136)
+
+--- Noise 1k
+mean: 0.0002
+mean on absoulte values: 0.0235
+sum: 0.007
+sum on absoulte values: 0.845
+range: (-0.052, 0.081)
+
+--- Spike 3k
+mean: 0.0012
+mean on absoulte values: 0.0076
+sum: 0.042
+sum on absoulte values: 0.272
+range: (-0.023, 0.053)
+\fi
+%%% tables %%%
+\input{content/experiments/03_Robustness_Improving/03.2_medNCA_and_Prostate/tables/table_03.2.1_Spike_1k}
+\input{content/experiments/03_Robustness_Improving/03.2_medNCA_and_Prostate/tables/table_03.2.1_Spike_3k}
+%\input{content/experiments/03_Robustness_Improving/03.2_medNCA_and_Prostate/tables/table_03.2.1_Noise_1k}

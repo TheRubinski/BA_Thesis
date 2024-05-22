@@ -1,0 +1,25 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}llllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train set} & original & spike 1.0 & spike 0.3 & spike 0.2 & spike 0.1 & spike 0.01\\\midrule[1.3pt]
+        % ---
+        DiceBceNQM & original       & 0.881 & 0.662 & 0.812 & 0.811 & 0.858 & 0.881\\
+        sqrtNQM    & original       & 0.875 -.01 & 0.694 \textbf{+.03} & 0.816 & 0.811 & 0.852 -.01 & 0.875 -.01\\\rowcolor{BG}
+        DiceBceNQM & Spike 1.0      & 0.867 & 0.817 & 0.864 & 0.863 & 0.865 & 0.866\\\rowcolor{BG}
+        sqrtNQM    & Spike 1.0      & 0.868 & 0.803 -.01 & 0.864 & 0.861 & 0.866 & 0.868\\
+        DiceBceNQM & Spike 0.3      & 0.874 & 0.750 & 0.853 & 0.859 & 0.870 & 0.875\\
+        sqrtNQM    & Spike 0.3      & 0.873 & 0.758 +.01 & 0.854 & 0.858 & 0.868 & 0.872\\\rowcolor{BG}
+        DiceBceNQM & Spike 0.2      & 0.878 & 0.751 & 0.843 & 0.863 & 0.869 & 0.878\\\rowcolor{BG}
+        sqrtNQM    & Spike 0.2      & 0.870 -.01 & 0.731 -.02 & 0.825 -.02 & 0.853 -.01 & 0.860 -.01 & 0.870 -.01\\
+        DiceBceNQM & Spike 0.1      & 0.875 & 0.754 & 0.849 & 0.860 & 0.869 & 0.876\\
+        sqrtNQM    & Spike 0.1      & 0.868 -.01 & 0.728 -.03 & 0.836 -.01 & 0.847 -.01 & 0.859 -.01 & 0.868 -.01\\\rowcolor{BG}
+        DiceBceNQM & Spike 0.01     & 0.877 & 0.644 & 0.801 & 0.811 & 0.852 & 0.877\\\rowcolor{BG}
+        sqrtNQM    & Spike 0.01     & 0.876 & 0.677 \textbf{+.03} & 0.811 +.01 & 0.827 +.02 & 0.855 & 0.876\\\bottomrule
+    \end{tabular}
+    \caption{\textbf{sqrtNQM} (\autoref{experiments:03.1.7:backbone_hippo:sqrtNQM}): Linear DiceBceNQM for comparisson. Only diffrences größer round $\pm$0.01 are shown (always in comparison to row above)\\
+    Overall, the sqrtNQM leads to another small improvement.}
+    \label{tab:3.1.7:sqrtNQM}
+\end{table}

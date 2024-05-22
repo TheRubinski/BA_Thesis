@@ -1,0 +1,48 @@
+\begin{table}%[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}llllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train set} & original & Spike 1.0 & Spike 0.3 & Spike 0.2 & Spike 0.1 & Spike 0.01\\\midrule[1.3pt]
+        % ---
+        DiceBCE     & original      & 0.879 & 0.574 & 0.793 & 0.791 & 0.841 & 0.880\\
+        DiceBceNQM  & original      & 0.881 & 0.661 \textbf{+.09} & 0.812 +.02 & 0.811 +.02 & 0.858 +.02 & 0.881\\\rowcolor{BG}
+        DiceBCE     & Spike 1.0     & 0.874 & 0.823 & 0.870 & 0.871 & 0.872 & 0.874\\\rowcolor{BG}
+        DiceBceNQM  & Spike 1.0     & 0.873 & 0.814 -.01 & 0.870 & 0.866 -.01 & 0.872 & 0.873\\
+        DiceBCE     & Spike 0.3     & 0.878 & 0.757 & 0.856 & 0.862 & 0.875 & 0.878\\
+        DiceBceNQM  & Spike 0.3     & 0.879 & 0.769 +.01 & 0.861 +.01 & 0.864 & 0.873 & 0.878\\\rowcolor{BG}
+        DiceBCE     & Spike 0.2     & 0.878 & 0.731 & 0.839 & 0.858 & 0.866 & 0.878\\\rowcolor{BG}
+        DiceBceNQM  & Spike 0.2     & 0.879 & 0.744 +.01 & 0.837 & 0.864 +.01 & 0.868 & 0.879\\
+        DiceBCE     & Spike 0.1     & 0.879 & 0.730 & 0.844 & 0.856 & 0.873 & 0.879\\
+        DiceBceNQM  & Spike 0.1     & 0.880 & 0.755 +.03 & 0.851 +.01 & 0.866 +.01 & 0.874 & 0.880\\\rowcolor{BG}
+        DiceBCE     & Spike 0.01    & 0.880 & 0.615 & 0.802 & 0.820 & 0.848 & 0.879\\\rowcolor{BG}
+        DiceBceNQM  & Spike 0.01    & 0.880 & 0.685 \textbf{+.07} & 0.827 +.02 & 0.834 +.01 & 0.856 +.01 & 0.879\\\bottomrule
+    \end{tabular}
+    \caption{Backbone-NCA, hippocampus dataset \textbf{Augmented with Spikes} (\autoref{experiments:03.1.1:backbone_hippo:spike_noise}): Using the DiceBceNQM improves robustness in this setting without having any adverse effects. First and foremost, a model trained on the original dataset with the DiceBceNQM becomes much more robust on the Spiked Dataset than if trained on the DiceBCE alone.}
+    \label{tab:03.1.1:DiceBCE+NQM_vs_DiceBCE_on_Spike}
+\end{table}
+\begin{table}%[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}llllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train set} & original & Noise 1.0 & Noise 0.3 & Noise 0.2 & Noise 0.1 & Noise 0.01\\\midrule[1.3pt]
+        % ---
+        DiceBCE     & original            & 0.880 & 0.549 & 0.798 & 0.823 & 0.859 & 0.880\\
+        DiceBceNQM  & original            & 0.881 & 0.703 \textbf{+.15} & 0.839 +.04 & 0.852 +.03 & 0.871 +.01 & 0.881\\\rowcolor{BG}
+        DiceBCE     & Noise 1.0     & 0.869 & 0.859 & 0.867 & 0.868 & 0.869 & 0.869\\\rowcolor{BG}
+        DiceBceNQM  & Noise 1.0     & 0.867 & 0.863 & 0.865 & 0.867 & 0.866 & 0.867\\
+        DiceBCE     & Noise 0.3     & 0.875 & 0.850 & 0.867 & 0.871 & 0.873 & 0.875\\
+        DiceBceNQM  & Noise 0.3     & 0.879 & 0.854 & 0.873 +.01 & 0.876 +.01 & 0.877 & 0.879\\\rowcolor{BG}
+        DiceBCE     & Noise 0.2     & 0.880 & 0.842 & 0.870 & 0.875 & 0.878 & 0.881\\\rowcolor{BG}
+        DiceBceNQM  & Noise 0.2     & 0.881 & 0.850 +.01 & 0.873 & 0.876 & 0.879 & 0.881\\
+        DiceBCE     & Noise 0.1     & 0.878 & 0.839 & 0.868 & 0.873 & 0.876 & 0.878\\
+        DiceBceNQM  & Noise 0.1     & 0.881 & 0.844 +.01 & 0.871 & 0.876 & 0.878 & 0.881\\\rowcolor{BG}
+        DiceBCE     & Noise 0.01    & 0.877 & 0.812 & 0.859 & 0.867 & 0.873 & 0.877\\\rowcolor{BG}
+        DiceBceNQM  & Noise 0.01    & 0.879 & 0.832 +.02 & 0.867 +.01 & 0.871 & 0.876 & 0.879\\\bottomrule
+    \end{tabular}
+    \caption{Backbone-NCA, hippocampus dataset \textbf{Augmented with Noise} (\autoref{experiments:03.1.1:backbone_hippo:spike_noise}): Using the DiceBceNQM improves robustness in this setting without having any adverse effects. First and foremost, a model trained on the original dataset with the DiceBceNQM becomes much more robust on the Noised Dataset than if trained on the DiceBCE alone.}
+    \label{tab:03.1.1:DiceBCE+NQM_vs_DiceBCE_on_Noise}
+\end{table}

@@ -1,0 +1,9 @@
+\subsection{Backbone-NCA on Prostate}
+\label{experiments:03.4.0:backbone_prost:intro}
+In \autoref{experiments:03.1.1:backbone_hippo:spike_noise}, it was shown that the DiceBceNQM loss can improve the robustness of the Backbone-NCA on the hippocampus dataset. In \autoref{experiments:03.2.0:med_prost:intro}, we saw unclear results regarding whether this could be transferred to a more complex model \textit{and} another dataset, so we decided to investigate this separately. In \autoref{experiments:03.3.0:med_hippo:intro_and_Augmented}, we already looked at the transferability of the results from the hippocampus dataset to another model, the Med-NCA. In this section, we want to look at the transferability to another dataset with the same model as in \autoref{experiments:03.1.1:backbone_hippo:spike_noise}. We, therefore, tested the behavior of the Backbone NCA on the prostate datasets. We tested this on both augmented data (\autoref{experiments:03.4.1:backbone_prost:Augmented}) and domain shifts (\autoref{experiments:03.4.2:Backbone_prost:DomainShifts}). 
+The results of the augmentations and domain shifts were similar to those of the Med-NCA, suggesting that the prostate dataset, rather than the model, is more challenging in transferability than the hippocampus dataset, but this would need to be verified with additional datasets. In particular, the all joined dataset is (partially) worse here, which reduces the results with the Med-NCA in this respect.
+
+
+%%% --- inputs ---
+\input{content/experiments/03_Robustness_Improving/03.4_Backbone_and_Prostate/03.4.1_Augmented_Spikes}
+\input{content/experiments/03_Robustness_Improving/03.4_Backbone_and_Prostate/03.4.2_DomainShifts}

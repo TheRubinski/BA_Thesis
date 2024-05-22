@@ -1,0 +1,21 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}llll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{4}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train dataset} & decath & decath shift 12 isbi  & decath shift 8 i2cvb & decath shift 4 ucl\\\midrule[1.3pt]
+        % --
+        diceBce     & decath            & 0.792 & 0.569 & 0.567 & 0.796\\
+        diceBceNQM  & decath            & 0.794 & 0.607 \textbf{+.04} & 0.585 +.02 & 0.807 +.01\\\bottomrule %\rowcolor{BG}
+        % diceBce     & shift 12 isbi     & 0.843 & 0.714 & 0.595 & 0.843\\\rowcolor{BG}
+        % diceBceNQM  & shift 12 isbi     & 0.850 +.01 & 0.738 +.02 & 0.615 +.02 & 0.841\\
+        % diceBce     & shift 8 i2cvb     & 0.855 & 0.643 & 0.708 & 0.846\\
+        % diceBceNQM  & shift 8 i2cvb     & 0.860 +.01 & 0.594 \textbf{-.05} & 0.723 +.02 & 0.849\\\rowcolor{BG}
+        % diceBce     & shift 4 ucl       & 0.783 & 0.653 & 0.544 & 0.756\\\rowcolor{BG}
+        % diceBceNQM  & shift 4 ucl       & 0.813 \textbf{+.03} & 0.574 \textbf{-.08} & 0.550 +.01 & 0.739 -.02\\\hline
+        % XXX Nur die Ersten Beiden Zeilen macht Sinn. Die anderen bietet keinen informationstechnischen Mehrwert, weil einfach andere nicht Domainfremde samples in test-set geschoben wurden
+    \end{tabular}
+    \caption{\textbf{Multiple Domainshifts} Test on Trainsets (\autoref{experiments:03.2.2:med_prost:onDomainShifts}): \todo{caption} \todo{only use decath + train dataset, since others are not intersting? or at least highlight somehow?}}
+    \label{tab:03.2.2:medNCA_Prost:domainShifts:multiOnMulti}
+\end{table}

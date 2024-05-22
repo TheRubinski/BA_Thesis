@@ -1,0 +1,46 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cl!{\vrule width 1.3pt}llllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries Stacksize} & \textbf{train set} & original & Spike 1.0 & Spike 0.3 & Spike 0.2 & Spike 0.1 & Spike 0.01\\\midrule[1.3pt]
+        % ---
+        3 & original    & 0.881 & 0.611 & 0.798 & 0.799 & 0.856 & 0.881\\\rowcolor{BG}
+        3 & Spike 0.3   & 0.878 & 0.782 & 0.868 & 0.863 & 0.873 & 0.877\\\rowcolor{BG}
+        6 & Spike 0.3   & 0.880 & 0.788 +.01 & 0.864 & 0.865 & 0.875 & 0.879\\
+        3 & Spike 0.2   & 0.876 & 0.728 & 0.832 & 0.860 & 0.868 & 0.876\\
+        6 & Spike 0.2   & 0.879 & 0.743 +.02 & 0.839 +.01 & 0.862 & 0.867 & 0.879\\\rowcolor{BG}
+        3 & Spike 0.1   & 0.880 & 0.753 & 0.856 & 0.862 & 0.875 & 0.880\\\rowcolor{BG}
+        6 & Spike 0.1   & 0.877 & 0.738 -.02 & 0.848 -.01 & 0.859 & 0.870 -.01 & 0.877\\\bottomrule
+    \end{tabular}
+    \caption{\textbf{Higher Stacksize} (\autoref{experiments:03.1.3:backbone_hippo:stackSize}): Comparrison between stacksize 3 and stacksize 6. Model from first line is traind on Dice BCE for comparison. For the other models here, the trainloss is the DiceBceNQM, but with diffrent stackSize.\\
+    A higher stacksize does not take any effekt, even though it is very expensive in computation time. All models are trained with a batchsize of 16, since the VRAM need with a stacksize of 6 was to high otherwise.}
+    \label{tab:3.1.3:higherStacksize}
+\end{table}
+
+\begin{table}[H]
+    \centering
+    \begin{tabular}{cl!{\vrule width 1.3pt}llllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries Stacksize} & \textbf{train set} & original & Spike 1.0 & Spike 0.3 & Spike 0.2 & Spike 0.1 & Spike 0.01\\\midrule[1.3pt]
+        % ---
+        3 & original        & 0.881 & 0.662 & 0.812 & 0.811 & 0.858 & 0.881                           \\
+        2 & original        & 0.882 & 0.645 -.02 & 0.801 -.01 & 0.809 & 0.853 -.01 & 0.883            \\\rowcolor{BG}
+        3 & Spike1.0  & 0.867 & 0.817 & 0.864 & 0.863 & 0.865 & 0.866                           \\\rowcolor{BG}
+        2 & Spike1.0  & 0.872 +.01 & 0.825 +.01 & 0.867 & 0.867 & 0.870 +.01 & 0.872 +.01       \\
+        3 & Spike0.3  & 0.874 & 0.750 & 0.853 & 0.859 & 0.870 & 0.875                           \\
+        2 & Spike0.3  & 0.876 & 0.756 +.01 & 0.854 & 0.858 & 0.871 & 0.875                      \\\rowcolor{BG}
+        3 & Spike0.2  & 0.878 & 0.751 & 0.843 & 0.863 & 0.869 & 0.878                           \\\rowcolor{BG}
+        2 & Spike0.2  & 0.878 & 0.737 -.01 & 0.835 -.01 & 0.861 & 0.864 -.01 & 0.878            \\
+        3 & Spike0.1  & 0.875 & 0.754 & 0.849 & 0.860 & 0.869 & 0.876                           \\
+        2 & Spike0.1  & 0.880 +.01 & 0.765 +.01 & 0.858 +.01 & 0.865 +.01 & 0.875 +.01 & 0.880  \\\rowcolor{BG}
+        3 & Spike0.01 & 0.877 & 0.644 & 0.801 & 0.811 & 0.852 & 0.877                           \\\rowcolor{BG}
+        2 & Spike0.01 & 0.881 & 0.659 +.02 & 0.816 +.01 & 0.823 +.01 & 0.861 +.01 & 0.881       \\\bottomrule
+    \end{tabular}
+    \caption{\textbf{Smaller Stacksize} (\autoref{experiments:03.1.3:backbone_hippo:stackSize}): Comparrison between stacksize 3 and stacksize 2. Models are trained on the DiceBceNQM, but with diffrent stackSize.\\
+    A stacksize of 2 is as good as a stacksize of 3, even though a higher stacksize is more expensive in computation time and VRAM.}
+    \label{tab:3.1.3:smallerStacksize}
+\end{table}

@@ -1,0 +1,34 @@
+\subsubsection{Domain Shifts}
+\label{experiments:03.2.2:med_prost:onDomainShifts}
+For the domain shifts, we created two series of "shift" datasets, with the prostate dataset from the Medical Segmentation Decathlon \cite{Antonelli:2022:MedSegmentationDecatlon} as the base, in which individual or a few data samples were added, and an "all joined" dataset, in which we joined all data samples together. As described in \autoref{experiments:03.0:Intro}.
+
+
+First, we trained a cohort on the shift 1 series and the all joined. The cohort's performance on the different original datasets can be seen in \autoref{tab:03.2.2:medNCA_Prost:domainShifts:OneOnOriginals}. On the decathlon, which is the primary dataset here, the performance is almost unchanged (max $\pm$2), which is ok. On the shift 1 datasets, however, the models trained on the DiceBceNQM show significantly worse results (up to -14 points on the dice). In some cases even on the datasets from which the samples were taken (worst case: shift 1 isbi with -11 points). In other words, the exact opposite effect occurred. The robustness decreased significantly in this experiment, even if the values were already in the lower mid-range with less than 50, sometimes less than 40 points. Surprisingly, the opposite is the case on the all connected. On the DiceBceNQM, the model performs significantly better than on the DiceBCE. Up to +7 points (ucl) on the individual datasets, although the model already had relatively high scores on the DiceBCE (82 points with ucl). Thus, in this experiment, the DiceBceNQM made a significant contribution to robustness.
+The models trained only on the decathlon dataset without the shifts for comparison performed equally well with DiceBCE and DiceBceNQM on all test datasets. Overall, the
+
+
+The comparison model trained with DiceBCE on the decathlon dataset barely shows a performance drop on the shift 1 datasets. Therefor, and because of the modest results here, we decided to investigate whether this changes on datasets with more samples shifted in. To do this, we generated a second set of shift datasets as described in \autoref{experiments:03.0:Intro} and trained a cohort on them. The results can be seen in \autoref{tab:03.2.2:medNCA_Prost:domainShifts:multiOnOriginals}. One model (shift 12 isbi) showed a positive effect. The model on the DiceBceNQM is no longer worse than on the DiceBCE. For the other two models, the models with the DiceBceNQM are no worse than with the DiceBCE, at least on the datasets from which the samples were shifted.
+
+
+Overall, 1. the DiceBceNQM did not improve robustness when there were only a single non-domain samples in a dataset. However, 2. for mixed datasets from many domains, the DiceBceNQM led to a significant improvement in robustness (all joined).
+\iffalse
+--------------------------
+XXX
+--- Multi on Multi
+
+mean: 0.002
+mean on absoulte values: 0.0204
+sum: 0.032
+sum on absoulte values: 0.326
+range: (-0.079, 0.038)
+
+--- Multi on Originals
+mean: -0.0154
+mean on absoulte values: 0.0335
+sum: -0.308
+sum on absoulte values: 0.67
+range: (-0.164, 0.057)
+\fi
+%%%% tables %%%%
+\input{content/experiments/03_Robustness_Improving/03.2_medNCA_and_Prostate/tables/table_03.2.2_Shift_One_on_Originals}
+\input{content/experiments/03_Robustness_Improving/03.2_medNCA_and_Prostate/tables/table_03.2.2_Shift_Multi_on_Originals}

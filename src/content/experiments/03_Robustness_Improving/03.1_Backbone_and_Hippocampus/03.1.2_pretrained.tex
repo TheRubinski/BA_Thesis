@@ -1,0 +1,20 @@
+\subsubsection{Pretraind Models}
+\label{experiments:03.1.2:backbone_hippo:pretrained}
+\begin{figure}[h!]
+    \centering
+        \begin{minipage}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Graphics/Experiments/3.1.2_realTime_with_error_.png}
+    \end{minipage} \hfill
+    \begin{minipage}{0.49\textwidth}
+        \centering
+        \includegraphics[width=\linewidth]{Graphics/Experiments/3.1.2_process_time_with_errors_.png}
+    \end{minipage}
+        \caption{Speed comparison between DiceBce and DiceBceNQM for real-time and process time. The average training times per epoch are shown in dark colors. The difference to the actual training times is shown in light colors behind the average. The DiceBceNQM takes much longer to train. The overall means for the real-time are 1.38 min and 0.49 min. The mean values for the process time are 6.33 min and 0.48 min.}
+    \label{fig:DiceBCE+NQM:Pretrained:Speedcompare}
+\end{figure}
+
+Training on the DiceBceNQM with a stack size of 3 takes about 13.19 times as long as training on the DiceBCE alone and about 2.8 times as long in real time on the system we used (\autoref{experiments:intro:system}, as can be seen in \autoref{fig:DiceBCE+NQM:Pretrained:Speedcompare}). This is simply because with the stacksize, the number of predictions that need to be generated for the NQM is many times greater than without it. We mostly used a stacksize of 3 in our experiments. Therefore, we tested whether we could perform similarly by using pretrained models. To do this, we first trained a cohort of models on the Spike Hippocampus and not augmented datasets. Half of the cohort was trained for the entire 600 epochs on DiceBceNQM. The other half was pretrained for 500 epochs on DiceBCE and another 100 epochs on DiceBceNQM. The results are given in \autoref{tab:3.1.2:DiceBCE+NQM:Pretrained}. The pretrained models are continuously approximately as good as those fully trained on the DiceBceNQM. This is true for the models trained on augmented datasets and those trained on not augmented datasets. The one trained on the non-augmented dataset tends to get a little worse, but compared to the one trained on only 500 epochs \autoref{tab:03.1.1:DiceBCE+NQM_vs_DiceBCE_on_Spike}, both are better on the spike datasets and similar as good on the non-augmented one. Especially for those trained on the sparsely augmented dataset (Spike 0.01), the pretrained performs better rather than worse. 
+
+The equivalence of these training methods is further emphasized when we look at the accumulations of the differences between pretrained and fully trained models for the entire cohort we trained for Dice: The maximum delta was $+ 0.037$, the sum of deltas was $-0.002$, the mean of the absolute deltas was $0.007$, the mean of signed deltas between these two groups was smaller in amount than $0.001$, up to these levels of accuracy. Each for the differences between the two models from the different groups trained on the same datasets (as shown as $\pm$ in the table).
+\input{content/experiments/03_Robustness_Improving/03.1_Backbone_and_Hippocampus/tables/table_03.1.2_pretrained}

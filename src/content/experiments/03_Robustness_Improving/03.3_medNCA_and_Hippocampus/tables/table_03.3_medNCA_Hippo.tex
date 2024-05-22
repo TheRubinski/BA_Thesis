@@ -1,0 +1,24 @@
+\begin{table}[H]
+    \centering
+    \begin{tabular}{ll!{\vrule width 1.3pt}llllll}
+        \toprule
+        \multicolumn{2}{c!{\vrule width 1.3pt}}{model} &
+        \multicolumn{5}{c}{\textbf{test dataset} (Dice $\uparrow$)}\\\midrule
+        {\bfseries train loss} & \textbf{train set} & original & Spike 1.0 & Spike 0.3 & Spike 0.2 & Spike 0.1 & Spike 0.01\\\midrule[1.3pt]
+        % ---
+        DiceBCE     & original      & 0.878 & 0.712 & 0.832 & 0.831 & 0.870 & 0.878\\
+        DiceBceNQM  & original      & 0.878 & 0.712 & 0.832 & 0.831 & 0.870 & 0.878\\\rowcolor{BG}
+        DiceBCE     & Spike 1.0     & 0.870 & 0.823 & 0.865 & 0.863 & 0.869 & 0.870\\\rowcolor{BG}
+        DiceBceNQM  & Spike 1.0     & 0.871 & 0.824 & 0.866 & 0.864 & 0.870 & 0.871\\
+        DiceBCE     & Spike 0.3     & 0.875 & 0.802 & 0.867 & 0.854 & 0.873 & 0.875\\
+        DiceBceNQM  & Spike 0.3     & 0.875 & 0.801 & 0.867 & 0.855 & 0.873 & 0.876\\\rowcolor{BG}
+        DiceBCE     & Spike 0.2     & 0.879 & 0.775 & 0.864 & 0.858 & 0.876 & 0.878\\\rowcolor{BG}
+        DiceBceNQM  & Spike 0.2     & 0.879 & 0.773 & 0.864 & 0.860 & 0.876 & 0.879\\
+        DiceBCE     & Spike 0.1     & 0.876 & 0.783 & 0.854 & 0.854 & 0.873 & 0.876\\
+        DiceBceNQM  & Spike 0.1     & 0.877 & 0.784 & 0.855 & 0.855 & 0.873 & 0.877\\\rowcolor{BG}
+        DiceBCE     & Spike 0.01    & 0.877 & 0.724 & 0.840 & 0.837 & 0.870 & 0.876\\\rowcolor{BG}
+        DiceBceNQM  & Spike 0.01    & 0.877 & 0.727 & 0.841 & 0.837 & 0.871 & 0.876\\\bottomrule
+    \end{tabular}
+    \caption{Med-NCA, hippocampus dataset \textbf{Augmented with Spikes}  (\autoref{experiments:03.3.0:med_hippo:intro_and_Augmented}): Here we have absolutly no diffrences at all between the DiceBCE and the DiceBceNQM.}
+    \label{tab:03.3.medNCA_Hippo_Spikes}
+\end{table}
