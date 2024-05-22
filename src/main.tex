@@ -1,0 +1,295 @@
+%% This is file `DEMO-TUDaThesis.tex' version 3.32 (2023/06/19),
+%% it is part of
+%% TUDa-CI -- Corporate Design for TU Darmstadt
+%% ----------------------------------------------------------------------------
+%%
+%%  Copyright (C) 2018--2023 by Marei Peischl <marei@peitex.de>
+%%
+%% ============================================================================
+%% This work may be distributed and/or modified under the
+%% conditions of the LaTeX Project Public License, either version 1.3c
+%% of this license or (at your option) any later version.
+%% The latest version of this license is in
+%% http://www.latex-project.org/lppl.txt
+%% and version 1.3c or later is part of all distributions of LaTeX
+%% version 2008/05/04 or later.
+%%
+%% This work has the LPPL maintenance status `maintained'.
+%%
+%% The Current Maintainers of this work are
+%%   Marei Peischl <tuda-ci@peitex.de>
+%%   Markus Lazanowski <latex@ce.tu-darmstadt.de>
+%%
+%% The development respository can be found at
+%% https://github.com/tudace/tuda_latex_templates
+%% Please use the issue tracker for feedback!
+%%
+%% If you need a compiled version of this document, have a look at
+%% http://mirror.ctan.org/macros/latex/contrib/tuda-ci/doc
+%% or at the documentation directory of this package (if installed)
+%% <path to your LaTeX distribution>/doc/latex/tuda-ci
+%% ============================================================================
+%%
+% !TeX program = lualatex
+%%
+
+\documentclass[
+	english, % was: ngerman,
+	ruledheaders=section,%Ebene bis zu der die Überschriften mit Linien abgetrennt werden, vgl. DEMO-TUDaPub
+	class=report,% Basisdokumentenklasse. Wählt die Korrespondierende KOMA-Script Klasse
+	thesis={type=bachelor},% Dokumententyp Thesis, für Dissertationen siehe die Demo-Datei DEMO-TUDaPhd
+	accentcolor=9c,% Auswahl der Akzentfarbe
+	custommargins=false,%true,% Ränder werden mithilfe von typearea automatisch berechnet
+	marginpar=false,% Kopfzeile und Fußzeile erstrecken sich nicht über die Randnotizspalte
+	%BCOR=5mm,%Bindekorrektur, falls notwendig
+	parskip=half-,%Absatzkennzeichnung durch Abstand vgl. KOMA-Script
+	fontsize=11pt,%Basisschriftgröße laut Corporate Design ist mit 9pt häufig zu klein
+	instbox=true,
+    oneside,% TODO: only change to 'twoside' for printing (enables \cleardoublepage)
+	% logofile=Graphics/tuda_logo.pdf, %Falls die Logo Dateien nicht vorliegen
+]{tudapub}
+
+
+% Der folgende Block ist nur bei pdfTeX auf Versionen vor April 2018 notwendig
+\usepackage{iftex}
+\ifPDFTeX
+	\usepackage[utf8]{inputenc}%kompatibilität mit TeX Versionen vor April 2018
+\fi
+
+%%%%%%%%%%%%%%%%%%%
+%Sprachanpassung & Verbesserte Trennregeln
+%%%%%%%%%%%%%%%%%%%
+\usepackage[main=english]{babel} % was: [english, main=ngerman]{babel}
+\usepackage[autostyle]{csquotes}% Anführungszeichen vereinfacht
+
+% Falls mit pdflatex kompiliert wird, wird microtype automatisch geladen, in diesem Fall muss diese Zeile entfernt werden, und falls weiter Optionen hinzugefügt werden sollen, muss dies über
+% \PassOptionsToPackage{Optionen}{microtype}
+% vor \documentclass hinzugefügt werden.
+\usepackage{microtype}
+%%%%%%%%%%%%%%%%%%%
+%Literaturverzeichnis
+%%%%%%%%%%%%%%%%%%%
+\usepackage{biblatex}   % Literaturverzeichnis
+\bibliography{meta/references.bib}
+
+
+%%%%%%%%%%%%%%%%%%%
+%Paketvorschläge Tabellen
+%%%%%%%%%%%%%%%%%%%
+%\usepackage{array}     % Basispaket für Tabellenkonfiguration, wird von den folgenden automatisch geladen
+\usepackage{tabularx}   % Tabellen, die sich automatisch der Breite anpassen
+%\usepackage{longtable} % Mehrseitige Tabellen
+%\usepackage{xltabular} % Mehrseitige Tabellen mit anpassbarer Breite
+\usepackage{booktabs}   % Verbesserte Möglichkeiten für Tabellenlayout über horizontale Linien
+% weitere
+\usepackage{multirow}
+
+%%%%%%%%%%%%%%%%%%%
+%Paketvorschläge Mathematik
+%%%%%%%%%%%%%%%%%%%
+% Vorschläge Damken
+%\usepackage{amsmath}
+%\usepackage{amssymb}
+%\usepackage[mathscr]{eucal}
+% Vorschläge TUDA
+\usepackage{mathtools} % erweiterte Fassung von amsmath
+\usepackage{amssymb}   % erweiterter Zeichensatz
+\usepackage{siunitx}   % Einheiten
+
+%%%%%%%%%%%%%%%%%%%
+% weitere eigne
+%%%%%%%%%%%%%%%%%%%
+\usepackage{xcolor,colortbl}    % Farben, Tabellenfarben
+\definecolor{BG}{gray}{0.85}    % Background color used for tables
+\usepackage{float}              % place tables manually by using [H] (not only [h] or [h!]), working nice :)
+
+%%%%%%%%%%%%%%%%%%
+% make nice Trees
+% from: https://tex.stackexchange.com/questions/23647/drawing-a-directory-listing-a-la-the-tree-command-in-tikz
+% and: https://texample.net/tikz/examples/filesystem-tree/
+%%%%%%%%%%%%%%%%%
+\usepackage{tikz}               % Trees
+\makeatletter
+\newcount\dirtree@lvl
+\newcount\dirtree@plvl
+\newcount\dirtree@clvl
+\def\dirtree@growth{%
+  \ifnum\tikznumberofcurrentchild=1\relax
+  \global\advance\dirtree@plvl by 1
+  \expandafter\xdef\csname dirtree@p@\the\dirtree@plvl\endcsname{\the\dirtree@lvl}
+  \fi
+  \global\advance\dirtree@lvl by 1\relax
+  \dirtree@clvl=\dirtree@lvl
+  \advance\dirtree@clvl by -\csname dirtree@p@\the\dirtree@plvl\endcsname
+  \pgf@xa=0.35cm\relax      % length of horizontal line   % was 1cm\relax
+  \pgf@ya=-0.7cm\relax      % distances between child-nodes % was -1cm\relax,  -0.7 is more compact, without overlaping
+  \pgf@ya=\dirtree@clvl\pgf@ya
+  %\pgf@xa=\dirtree@plvl\pgf@xa  % this does do something .... but not, what I want ...
+  \pgftransformshift{\pgfqpoint{\the\pgf@xa}{\the\pgf@ya}} % shifte x, y but only relative to parents center ...
+  % was {\the\pgf@xa}{\the\pgf@ya}} ... you should be able to shift here ...
+  \ifnum\tikznumberofcurrentchild=\tikznumberofchildren
+  \global\advance\dirtree@plvl by -1
+  \fi
+}
+
+\tikzset{
+  dirtree/.style={
+    growth function=\dirtree@growth,
+    every node/.style={draw=black,thick,anchor=north},
+    every child node/.style={draw=black,thick,anchor=west},
+    edge from parent path={(\tikzparentnode\tikzparentanchor) |- (\tikzchildnode\tikzchildanchor)}
+  }
+}
+\makeatother
+
+%%%%%%%%%%%%%%%%%%
+% make colored operators
+% from: https://tex.stackexchange.com/questions/273941/how-to-change-color-of-operators-lim-log-etc
+%%%%%%%%%%%%%%%%%
+%\usepackage{xcolor,amsmath
+\usepackage{xpatch,letltxmacro}
+% \DeclareMathOperator{\abc}{abc}                    % just new math operator
+% \xpatchcmd{\qopname}{#3}{\textcolor{red}{#3}}{}{}  % all min, max, sin, etc --> red 
+\LetLtxMacro\latexsqrt\sqrt
+\NewDocumentCommand{\sqrtRed}{om}{       % was: \RenewDocumentCommand{\sqrt}{om}{%
+  \colorlet{current}{.}
+  \IfNoValueTF{#1}
+    {\textcolor{red}{\latexsqrt{\textcolor{current}{#2}}}}%
+    {\textcolor{red}{\latexsqrt[#1]{\textcolor{current}{#2}}}}%
+}
+
+%% use:
+  % \sqrtRed{blabla}
+  %% was:
+  % \abc d \quad
+  % \sin \theta \quad
+  % \log_e \quad
+  % \lim_{x \rightarrow 0} \quad
+  % \int_a^b \quad
+  % \sqrt{2} \quad
+  % \sqrt[3]{x+1}
+
+\setcounter{secnumdepth}{3}     % so \autoref also will show 3ed lvl like 03.2.1.1 not only 03.2.1
+
+%Formatierungen für Beispiele in diesem Dokument. Im Allgemeinen nicht notwendig!
+%\let\file\texttt
+%\let\code\texttt
+%\let\tbs\textbackslash
+%\let\pck\textsf
+%\let\cls\textsf
+
+\usepackage{pifont}% Zapf-Dingbats Symbole
+\newcommand*{\FeatureTrue}{\ding{52}}
+\newcommand*{\FeatureFalse}{\ding{56}}
+
+\newcommand{\todo}[1]{{\color{blue}\textbf{TODO: } #1\textbf{}}\newline}
+\newcommand{\note}[1]{{\color{red}\textbf{note: } #1\textbf{}}} % or with \newline}
+\newcommand{\atJohn}[1]{{\color{violet}\textbf{@ John: } #1\textbf{}}} % or with \newline}
+\newcommand{\bgA}[1]{{}\colorbox{gray}{}}  %background for tabels
+
+
+%%% toogle tables in text %%%
+\newif\iftable
+\tablefalse % set true / false here
+%%% %%%
+\begin{document}
+
+\Metadata{
+	title=Dataset Balancing for Improving Robustness of Medical Neural Cellular Automata,  % TODO: adjust title
+	author=R. Spari,
+}
+
+\title{Improving Robustness of Neural Cellular Automata for Medical Image Segmentation with a Variance Based Quality Metric}  % TODO: adjust title
+%\subtitle{\color{red} Subtitel}
+\author[R.Spari]{Ruben Spari} %optionales Argument ist die Signatur,
+\birthplace{Limburg, Deutschland}
+\reviewer{  % TODO: adjust reviewers
+	Anirban Mukhopadhyay
+	\and
+	John Kalkhof
+	% \and
+	% \color{red} maybe somebody else
+}
+
+%Diese Felder werden untereinander auf der Titelseite platziert.
+%\department ist eine notwendige Angabe, siehe auch dem Abschnitt `Abweichung von den Vorgaben für die Titelseite'
+\department{inf} % Das Kürzel wird automatisch ersetzt und als Studienfach gewählt, siehe Liste der Kürzel im Dokument.
+\institute{Interactive Graphics Systems Group}
+\group{Medical and Environmental Computing}
+\addTitleBoxLogo*{\includegraphics[width=1.0\linewidth]{Graphics/GRIS+MecLabLogo.png}}  % was width=0.75 % TODO: adjust group logo; you might want to set instbox=false
+
+\submissiondate{\today}
+\examdate{\today}
+
+% Hinweis zur Lizenz:
+% TUDa-CI verwendet momentan die Lizenz CC BY-NC-ND 2.0 DE als Voreinstellung.
+% Die TU Darmstadt hat jedoch die Empfehlung von dieser auf die liberalere
+% CC BY 4.0 geändert. Diese erlaubt eine Verwendung bearbeiteter Versionen und
+% die kommerzielle Nutzung.
+% TUDa-CI wird im nächsten größeren Release ebenfalls diese Anpassung vornehmen.
+% Aus diesem Grund wird empfohlen die Lizenz manuell auszuwählen.
+%\tuprints{urn=XXXXX,printid=XXXX,year=2022,license=cc-by-4.0}
+% To see further information on the license option in English, remove the license= key and pay attention to the warning & help message.
+
+% \dedication{Für alle, die \TeX{} nutzen.}
+
+% TODO ???: can use 	\pagenumbering{gobble} ... 	\pagenumbering{Roman}  % I, II, … ... 	\pagenumbering{arabic}  % 1, 2, … like is Fabian Darmken to use diffrent sets of pagenumbers for pre-content stuff. But will start with page number "1" on first content page. So you hae like 4 pages less ...
+
+\pagenumbering{gobble}                        % or include againe ?
+{
+    \maketitle
+}
+
+\cleardoublepage
+\pagenumbering{Roman}  % I, II, …             % or include againe ?
+{
+    \include{meta/abstract} % \abstract ... should also work, but does not ...
+    \affidavit[signature-image={\includegraphics[height=2cm]{Graphics/grafik.png}}]
+}
+
+% Es gibt mit Version 3.20 die Möglichkeit ein Bild als Signatur einzubinden.
+% TUDa-CI kann nicht garantieren, dass dies zulässig ist oder eine eigenhändige Unterschrift ersetzt.
+% Dies ist durch Studierende vor der Verwendung abzuklären.
+% Die Verwendung funktioniert so:
+%\affidavit[signature-image={\includegraphics[width=\width,height=1cm]{example-image}}, <hier können andere Optionen zusätzlich stehen>]
+
+\tableofcontents
+% TODO ??? - Include again?:
+%\chapter*{Algorithms, Figures and Tables}
+%	\listofalgorithms
+%	\listoffigures
+%	\listoftables
+
+% TODO: Include again ???
+%\chapter*{Abbreviations and Symbols}
+%	%\glsaddall  % forces all glossary entries to be shown
+%	\printunsrtglossary[type=abbreviations]
+%	\printunsrtglossary[type=symbols]
+
+% CONTENT
+\cleardoublepage
+\pagenumbering{arabic}  % 1, 2, …       % or include againe ?
+{
+    \include{content/introduction}
+    \include{content/related-work}
+    \include{content/methods/methods_0_intro}
+    \include{content/experiments/experiments_0_intro}
+    \include{content/future-work}
+    \include{content/conclusion}
+}
+% \include{} --> \clearpage after(!) 
+% \input{}    --> no \clearpage after
+
+%\nocite{*}  % forces all bibliography entries to be shown
+\printbibliography
+
+% \newgeometry{left=0.5cm,bottom=0.5cm} % works, but does not look so nice
+\appendix
+\input{appendix/Tables}
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\linewidth]{Graphics/Erklärung_zur_Abschlussarbeit_Scan_20231231_0001.pdf}
+\end{figure}
+
+\end{document}
